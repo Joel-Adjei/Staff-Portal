@@ -33,6 +33,5 @@ app.post('/api/auth/login' , (req , res)=>{
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
-    console.log(`Backend API endpoints are available at: http://localhost:${PORT}/api/...`);
 });
 
