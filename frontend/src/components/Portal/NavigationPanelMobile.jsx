@@ -1,9 +1,9 @@
 import React from 'react'
 import {useAuth} from "../../context/AuthContext";
 import {
-    Home , BookOpen , GraduationCap , Calendar , CheckSquare ,
-    Lightbulb , Bell , User , ClipboardList , FileText ,
-    Megaphone ,MessageSquare
+    Home, BookOpen, GraduationCap, Calendar, CheckSquare,
+    Lightbulb, Bell, User, ClipboardList, FileText,
+    Megaphone, MessageSquare, LogOut
 } from "lucide-react";
 import {usePortal} from "../../context/PortalContext";
 import {NavLink} from "react-router-dom";
@@ -33,10 +33,13 @@ const NavigationItem = ({ icon: Icon, label, to , active , viewName }) => {
 
 const NavigationPanelMobile =()=> {
     const {roleRef} = useAuth()
-    const { showPanelMobile } = usePortal()
+    const { showPanelMobile, togglePanelMobile} = usePortal()
     return(
         <>
-            <div className={`fixed ${showPanelMobile} top-0 w-full h-[100vh] bg-gray-900/50 z-0 md:hidden`}></div>
+            <div className={`fixed ${showPanelMobile} top-0 w-full h-[100vh] bg-gray-900/50 z-0 md:hidden`}
+                 onClick={()=> togglePanelMobile()}
+            >
+            </div>
             {/* Sidebar */}
             <aside className={`w-[250px] h-[100vh] pt-[60px] fixed bottom-0 dark:bg-blue-950 left-0 bg-[#FBFBFB] p-2 pl-0 shadow-xl ${showPanelMobile} flex-col border-r-[2px] border-[#FF970B] rounded-r-3xl z-20 md:hidden`}>
                 <nav className=" w-full h-full flex flex-col justify-between">
@@ -86,10 +89,11 @@ const NavigationPanelMobile =()=> {
                         <div className="bottom-0 mt-auto pt-6 border-t border-gray-700"> {/* Pushes logout to bottom */}
                             <button
                                 // onClick={logout}
-                                className="flex items-center w-full p-3 rounded-lg text-left text-gray-200 hover:bg-red-600 hover:text-white transition-all duration-200 ease-in-out"
+                                className="flex items-center w-full p-3 rounded-lg text-left text-gray-200 hover:bg-blue-300 hover:text-white transition-all duration-200 ease-in-out"
                             >
                                 {/*<LogIn className="mr-3 h-5 w-5" />*/}
-                                <span className="font-medium text-blue-950 text-lg">Logout</span>
+                                <LogOut className="mr-3 h-5 w-5 text-blue-950 dark:text-blue-200 " />
+                                <span className="font-medium text-blue-950 dark:text-blue-200 text-md">Logout</span>
                             </button>
                         </div>
                     </div>

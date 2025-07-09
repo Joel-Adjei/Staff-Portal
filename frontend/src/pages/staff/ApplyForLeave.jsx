@@ -11,7 +11,7 @@ import Button from "../../components/basic/button/Button";
 const ApplyForLeave = () => {
     const [message, setMessage] = useState({ text: '', type: '' });
     const { user } = useAuth();
-    const userName = user?.name || user?.email.split('@')[0] || 'Unknown';
+    const userName = user?.firstName;
     const userId = user?.id || 'anonymous'; // Use user.id from backend
 
     const validationSchema = Yup.object().shape({

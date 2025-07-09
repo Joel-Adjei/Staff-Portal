@@ -37,6 +37,8 @@ const Login =()=>{
     const handleLoginSubmit = async (values, { setSubmitting }) => {
         setMessage({ text: '', type: '' });
         setLoading(true)
+        //https://staff-portal-qkp1.vercel.app/api
+	//http://localhost:1972/api
         const API_BASE_URL = "https://staff-portal-qkp1.vercel.app/api"
         try{
             const response =  await fetch(`${API_BASE_URL}/auth/login`,
@@ -45,7 +47,11 @@ const Login =()=>{
                 headers : {
                   "Content-type" : "application/json"
                 },
-                body : JSON.stringify(values)
+                body : JSON.stringify({
+                    "email": `${values.email}`,
+                    "password": `${values.password}`,
+                    "role": `${roleRef.current}`
+                })
               }
 
             );
@@ -69,7 +75,7 @@ const Login =()=>{
         } catch (error) { 
             console.error("Login error:", error);
             setMessage({
-                text: error.response?.data?.message || 'Login failed. Please check your internet connection.',
+                text: 'Login failed. Please try again.',
                 type: 'error',
             });
         } finally {
@@ -184,7 +190,7 @@ const Login =()=>{
                             displayPassword === "password" ? <EyeOff /> : <Eye/>
                         }
                     </button>
-                    <p className={`absolute right-0 -bottom-25 text-sm text-blue-600 cursor-pointer dark:text-blue-200 text-blue-600 hover:underline`}>
+                    <p className={`absolute right-0 bottom-[-30px] text-sm text-blue-600 cursor-pointer dark:text-blue-200 text-blue-600 hover:underline`}>
                         forgot your password?
                     </p>
                 </div>
@@ -192,7 +198,7 @@ const Login =()=>{
                 <ErrorMessage name="password" component="div" className="text-red-500 text-xs mt-1" />
               </div>
 
-              <div className="w-full flex items-center justify-between">
+              <div className="w-full flex justify-center mt-auto pt-5 dark:border-blue-200" >
                 <Button
                   type="submit"
                   disabled={isSubmitting}

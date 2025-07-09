@@ -11,6 +11,7 @@ import SuggestionBox from "./pages/staff/SuggestionBox";
 import ApplyForLeave from "./pages/staff/ApplyForLeave";
 
 function App() {
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<RootLayout />}>

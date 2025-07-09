@@ -10,7 +10,7 @@ import {usePortal} from "../../context/PortalContext";
 import NavigationPanelMobile from "./NavigationPanelMobile";
 
 const NavigationPanel=()=>{
-    const {roleRef} = useAuth()
+    const {roleRef , logout} = useAuth()
     const { showPanel } = usePortal()
     return(
         <>
@@ -60,7 +60,7 @@ const NavigationPanel=()=>{
 
                     </ul>
                     <div>
-                        <div className="bottom-0 mt-auto pt-5 border-t border-gray-400 dark:border-blue-200"> {/* Pushes logout to bottom */}
+                        <div  className="bottom-0 mt-auto pt-5 border-t border-gray-400 dark:border-blue-200"> {/* Pushes logout to bottom */}
                             <button
                                 // onClick={logout}
                                 className="flex items-center w-full p-3 rounded-lg text-left text-gray-200 hover:bg-blue-300 hover:text-white transition-all duration-200 ease-in-out"

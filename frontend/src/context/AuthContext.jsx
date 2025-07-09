@@ -5,10 +5,9 @@ const AuthContext = createContext();
 
 export const AuthContextProvider=({children})=>{
     const roleRef = useRef("teaching")
-  const [role , setRole] = useState("non-teaching") // set role to non-teaching staff (non-teaching || teaching || admin)
   const [user, setUser] = useState(null); // User object from backend API (e.g., { id, email, fullName, role })
-  const [loading, setLoading] = useState(false);
-  const [isLogin , setIsLogin] = useState(false)
+ // const isLogin = useRef(false)
+  // const [isLogin , setIsLogin] = useState(false)
 
 
   function setRoleRef(role) {
@@ -20,24 +19,23 @@ export const AuthContextProvider=({children})=>{
       setUser(userData.data);
       localStorage.setItem("token" , userData.token);
       localStorage.setItem("user" , JSON.stringify(userData.data));
-        setIsLogin(true)
+        // setIsLogin(true)
     };
 
   const logout = () => {
     // Clear user data upon logout
-    setUser(null);
+    //   setIsLogin(false)
+     setUser(null);
     // In a real app, you'd remove the JWT token from localStorage here
     console.log("User signed out successfully.");
+
   };
 
     return(
         <AuthContext.Provider value={{
-            isLogin,
-            // role,
-            // setRole,
             roleRef,
             setRoleRef,
-            user, 
+            user,
             login, 
             logout
         }}>

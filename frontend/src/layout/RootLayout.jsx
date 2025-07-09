@@ -3,12 +3,9 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext';
 
 const RootLayout = () => {
-  const { isLogin } = useAuth()
-  const navigator = useNavigate();
-
+  const navigator = useNavigate()
   useEffect(()=>{
-    console.log(isLogin)
-    isLogin ? navigator("/portal") : navigator("/auth/login")
+    navigator("/auth/login")
   },[])
 
   return (

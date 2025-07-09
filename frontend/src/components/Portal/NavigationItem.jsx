@@ -14,7 +14,7 @@ const NavigationItem = ({ icon: Icon, label, to , active , onClick , viewName })
             ${active ? 'bg-orange-color': ''}
             hover:bg-blue-300/20
             dark:text-blue-200
-            ${currentPage == viewName && "bg-orange-color text-white dark:text-white"}
+            ${currentPage == viewName && "bg-orange-color hover:bg-orange-color text-white dark:text-white "}
             `}
         >
             <Icon className={`mr-3 h-5 w-5  ${currentPage == viewName ? "text-white" : "text-orange-color"}`} />
