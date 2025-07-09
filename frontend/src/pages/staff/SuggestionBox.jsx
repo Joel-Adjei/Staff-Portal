@@ -3,6 +3,9 @@ import {Lightbulb} from "lucide-react";
 import MessageAlert from "../../components/MessageAlert";
 import { Formik, Form, Field, ErrorMessage, useFormikContext } from 'formik';
 import * as Yup from 'yup';
+import AppInput from "../../components/basic/input/AppInput";
+import Header from "../../components/basic/Header";
+import Button from "../../components/basic/button/Button";
 
 const SuggestionBox = () => {
     const [message, setMessage] = useState({ text: '', type: '' });
@@ -33,9 +36,9 @@ const SuggestionBox = () => {
 
     return (
         <div className="p-6">
-            <h3 className="text-2xl font-semibold mb-4 text-gray-800 flex items-center">
-                <Lightbulb className="mr-2 h-7 w-7 text-yellow-600" /> Suggestion Box (Anonymous)
-            </h3>
+            <Header
+               Icon={Lightbulb} title={"Suggestion Box (Anonymous)"}
+            />
             <MessageAlert message={message.text} type={message.type} />
             <Formik
                 initialValues={{ suggestion: '' }}
@@ -45,10 +48,10 @@ const SuggestionBox = () => {
                 {({ isSubmitting }) => (
                     <Form className="space-y-4">
                         <div>
-                            <label htmlFor="suggestion" className="block text-gray-700 text-sm font-bold mb-2">
+                            <label htmlFor="suggestion" className="block text-gray-600 text-sm font-bold mb-2">
                                 Your Suggestion/Complaint/Thought
                             </label>
-                            <Field
+                            <AppInput
                                 as="textarea"
                                 id="suggestion"
                                 name="suggestion"
@@ -56,15 +59,14 @@ const SuggestionBox = () => {
                                 className="shadow border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Enter your anonymous suggestion here..."
                             />
-                            <ErrorMessage name="suggestion" component="div" className="text-red-500 text-xs mt-1" />
-                        </div>
-                        <button
+                         </div>
+                        <Button
                             type="submit"
                             disabled={isSubmitting}
                             className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {isSubmitting ? 'Submitting...' : 'Submit Suggestion'}
-                        </button>
+                        </Button>
                     </Form>
                 )}
             </Formik>

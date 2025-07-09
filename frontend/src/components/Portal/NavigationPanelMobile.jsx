@@ -24,8 +24,8 @@ const NavigationItem = ({ icon: Icon, label, to , active , viewName }) => {
             ${currentPage == viewName && "bg-orange-color text-white"}
             `}
             >
-                <Icon className={`mr-3 h-5 w-5 ${currentPage == viewName ? "text-white" : "text-orange-color"}`} />
-                <span className="font-medium text-[15px]">{label}</span>
+                <Icon className={`mr-3 h-5 w-5 ${currentPage == viewName ? "text-white " : "text-orange-color"}`} />
+                <span className="font-medium dark:text-blue-200 text-[15px]">{label}</span>
             </button>
         </NavLink>
     </li>
@@ -38,7 +38,7 @@ const NavigationPanelMobile =()=> {
         <>
             <div className={`fixed ${showPanelMobile} top-0 w-full h-[100vh] bg-gray-900/50 z-0 md:hidden`}></div>
             {/* Sidebar */}
-            <aside className={`w-[250px] h-[100vh] pt-[60px] fixed bottom-0 left-0 bg-[#FBFBFB] p-2 pl-0 shadow-xl ${showPanelMobile} flex-col border-r-[2px] border-[#FF970B] rounded-r-3xl z-20 md:hidden`}>
+            <aside className={`w-[250px] h-[100vh] pt-[60px] fixed bottom-0 dark:bg-blue-950 left-0 bg-[#FBFBFB] p-2 pl-0 shadow-xl ${showPanelMobile} flex-col border-r-[2px] border-[#FF970B] rounded-r-3xl z-20 md:hidden`}>
                 <nav className=" w-full h-full flex flex-col justify-between">
                     <ul>
                         <NavigationItem

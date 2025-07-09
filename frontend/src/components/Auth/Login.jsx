@@ -1,7 +1,7 @@
 import React , {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom'
 import { usePortal } from "../../context/PortalContext";
-import Button from "../Button";
+import Button from "../basic/button/Button";
 import {Eye , EyeClosed ,EyeOff } from 'lucide-react';
 import * as Yup from 'yup';
 import { Formik , Form, Field, ErrorMessage } from "formik";

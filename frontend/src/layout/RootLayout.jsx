@@ -12,7 +12,7 @@ const RootLayout = () => {
   },[])
 
   return (
-    <div>
+    <div className={'h-[100vh] dark:bg-deep_blue_black'} >
         <Outlet />
     </div>
   )

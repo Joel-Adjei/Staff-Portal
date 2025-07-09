@@ -13,8 +13,11 @@ export default {
         'font-color': "#3D4461",
         'white-color' : '#FBFBFB',
         'orange-color' : '#FF970B',
-        'login-bgg' : 'linear-gradient(#FF970B , #FBFBFB)'
+
       },
+      backgroundImage: {
+        login_gradient : 'linear-gradient(#FF970B , #FBFBFB)',
+      }
     },
   },
   plugins: [],

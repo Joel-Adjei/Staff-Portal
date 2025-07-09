@@ -34,6 +34,7 @@ export const PortalContextProvider =({children})=>{
             showPanel,
             togglePanel,
             showPanelMobile,
+            handleThemeChange,
             togglePanelMobile,
             darkMode,
             toggleDarkMode,
