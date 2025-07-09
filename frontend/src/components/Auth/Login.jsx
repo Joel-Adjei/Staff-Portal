@@ -37,7 +37,7 @@ const Login =()=>{
     const handleLoginSubmit = async (values, { setSubmitting }) => {
         setMessage({ text: '', type: '' });
         setLoading(true)
-        const API_BASE_URL = "staff-portal-qkp1.vercel.app/api"
+        const API_BASE_URL = "https://staff-portal-qkp1.vercel.app/api"
         try{
             const response =  await fetch(`${API_BASE_URL}/auth/login`,
               {
