@@ -1,9 +1,11 @@
 import React, {useEffect} from 'react';
 import {PanelLeft, Bell, Moon, Sun} from "lucide-react";
 import {usePortal} from "../../context/PortalContext";
+import {useAuth} from "../../context/AuthContext";
 
 const NavBar =()=>{
     const { currentPage , toggleDarkMode, handleThemeChange ,togglePanel ,togglePanelMobile} = usePortal()
+  const { user , roleRef } = useAuth()
 
     function formatString(title) {
         return title.split('-').map((word)=> word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
@@ -34,7 +36,7 @@ const NavBar =()=>{
                     <Bell  className={"size-[30px] text-[#FF970B] p-1 rounded-full bg-gray-200 dark:bg-blue-200 dark:text-blue-950 cursor-pointer mr-3 "} />
 
                     <div className={" flex items-center gap-2 hover:bg-blue-300/20 px-2 py-1 cursor-pointer rounded"}>
-                        <p className={"hidden text-font-color dark:text-blue-200 md:block"}>Dr. Apreku</p>
+                        <p className={"hidden text-font-color dark:text-blue-200 md:block"}>Dr. {user.firstName}</p>
                         <div className={"size-[35px] bg-gray-500 rounded-full"}></div>
                     </div>
                 </div>

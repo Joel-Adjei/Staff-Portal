@@ -19,7 +19,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <h3 className={"mx-auto text-3xl font-semibold text-font-color dark:text-blue-200 mt-2"}>Mr. {userData.name}</h3>
+        <h3 className={"mx-auto text-3xl font-semibold text-font-color dark:text-blue-200 mt-2"}>Mr. {userData.firstName+" "+userData.lastName}</h3>
         <div className ={"px-10 py-[2px] text-sm text-white rounded bg-orange-color mt-1"}>Social Teacher</div>
       </section>
 
