@@ -7,12 +7,16 @@ import {useAuth} from "../../context/AuthContext";
 import AppInput from "../../components/basic/input/AppInput";
 import Header from "../../components/basic/Header";
 import Button from "../../components/basic/button/Button";
+import useToast from "../../hooks/useToast";
+import {ToastContainer} from "../../Toast";
+import useFetch from "../../hooks/useFetch";
 
 const ApplyForLeave = () => {
     const [message, setMessage] = useState({ text: '', type: '' });
-    const { user } = useAuth();
-    const userName = user?.firstName;
-    const userId = user?.id || 'anonymous'; // Use user.id from backend
+    const { user , token } = useAuth();
+    const {toasts, addToast, removeToast} = useToast()
+
+    const {fetchData ,response, loading} = useFetch({method:"POST" , endpoint: "/users/staff/leave" ,})
 
     const validationSchema = Yup.object().shape({
         reason: Yup.string().required('Reason for leave is required').min(10, 'Reason must be at least 10 characters'),
@@ -26,40 +30,36 @@ const ApplyForLeave = () => {
     });
 
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-        setMessage({ text: '', type: '' });
+        const payload =
+            {
+                "reason": `${values.reason}`,
+                "start_date": `${values.startDate}`,
+                "end_date": `${values.endDate}`
+            }
         try {
-            // const payload = {
-            //     ...values,
-            //     applicantId: userId,
-            //     applicantName: userName,
-            // };
-            //
-            // const response = await axios.post(`${API_BASE_URL}/staff/leave`, payload);
-            //
-            // if (response.status === 201) {
-            //     setMessage({ text: 'Leave application submitted successfully!', type: 'success' });
-            //     resetForm();
-            // }
+            await fetchData({payload: payload, token: token.current})
+            if(response.current.ok){
+                addToast("message sent successful", "success")
+            }
             console.log(values)
         } catch (error) {
             console.error("Apply leave error:", error);
-            setMessage({
-                text: error.response?.data?.message || 'Failed to submit leave application. Please try again.',
-                type: 'error',
-            });
+            addToast("Failed to submit leave application. Please try again", "error")
+
         } finally {
             setSubmitting(false);
+            resetForm()
         }
     };
 
     return (
         <div className="p-6">
+            <ToastContainer toasts={toasts} removeToast={removeToast} />
             <Header
                 Icon={Calendar}
                 className="mr-2 h-7 w-7 text-green-600"
                 title={"Apply for Leave"}
             />
-            <MessageAlert message={message.text} type={message.type} />
             <Formik
                 initialValues={{ reason: '', startDate: '', endDate: '', comments: '' }}
                 validationSchema={validationSchema}

@@ -1,11 +1,12 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {PanelLeft, X , Bell, Moon, Sun} from "lucide-react";
 import {usePortal} from "../../context/PortalContext";
 import {useAuth} from "../../context/AuthContext";
 
 const NavBar =()=>{
-    const { currentPage ,showPanel, toggleDarkMode, handleThemeChange ,togglePanel ,togglePanelMobile} = usePortal()
+    const { currentPage ,showPanel, toggleDarkMode, handleThemeChange, toggleProfilePanel ,togglePanel ,togglePanelMobile} = usePortal()
     const {user} = useAuth()
+
 
     function formatString(title) {
         return title.split('-').map((word)=> word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
@@ -13,7 +14,7 @@ const NavBar =()=>{
 
     return(
         <nav className={"w-full fixed flex items-center md:justify-between top-0 bg-gray-50 shadow-md z-30 dark:bg-blue-950"}>
-            <div className={"md:w-[255px] bg-orange-color flex items-center gap-2 py-3.5 md:py-1.5 pl-5 rounded-r-md"}>
+            <div className={"md:w-[255px] bg-gradient-to-r from-orange-500 to-orange-600 flex items-center gap-2 py-3.5 md:py-1.5 pl-5 rounded-r-md"}>
                 <button onClick={()=> {
                     togglePanel()
                     togglePanelMobile()
@@ -35,10 +36,11 @@ const NavBar =()=>{
                 <div className={" flex items-center gap-1 md:gap-2"}>
                     <Bell  className={"size-[30px] text-[#FF970B] p-1 rounded-full bg-gray-200 dark:bg-blue-200 dark:text-blue-950 cursor-pointer "} />
 
-                    <div className={" flex items-center gap-2 hover:bg-blue-300/20 px-2 py-1 cursor-pointer rounded"}>
-                        <p className={"hidden text-font-color dark:text-blue-200 md:block"}>Mr. {user.lastName}</p>
+                    <button className={" flex items-center gap-2 hover:bg-blue-300/20 px-2 py-1 cursor-pointer rounded"}
+                            onClick={()=> toggleProfilePanel()}
+                    >
                         <div className={"size-[35px] bg-gray-500 rounded-full"}></div>
-                    </div>
+                    </button>
                 </div>
             </div>
 
@@ -50,7 +52,7 @@ const NavBar =()=>{
                     }}
                 >
                      <Moon className={`w-6 h-6 text-blue-950 dark:bg-blue-950 dark:text-blue-200 p-1 rounded-full `} />
-                     <Sun className={"size-6 bg-orange-color text-white-color p-1 rounded-full dark:bg-transparent dark:text-blue-950 "} />
+                     <Sun className={"size-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white-color p-1 rounded-full dark:bg-none dark:text-blue-950 "} />
                 </button>
 
         </nav>

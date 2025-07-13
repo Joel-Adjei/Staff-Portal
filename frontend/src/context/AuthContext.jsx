@@ -1,13 +1,36 @@
 import React, {useState, useEffect, createContext, useContext, useRef} from 'react'
-import { useNavigate } from 'react-router-dom';
+import useFetch from "../hooks/useFetch";
 
 const AuthContext = createContext();
 
 export const AuthContextProvider=({children})=>{
     const roleRef = useRef("teaching")
-  const [user, setUser] = useState(null); // User object from backend API (e.g., { id, email, fullName, role })
- // const isLogin = useRef(false)
-  // const [isLogin , setIsLogin] = useState(false)
+    const token = useRef("")
+    const userRef = useRef(null);
+    const [user, setUser] = useState(null); // User object from backend API (e.g., { id, email, fullName, role })
+    let isLogin = useRef(false)
+
+    const {loading : reloadLoad , fetchData  , response} = useFetch({endpoint: "/users/staff/profile"})
+
+     const fetchProfile = async ()=> {
+        if(localStorage.getItem("token") !== null){
+            token.current = ( localStorage.getItem("token") )
+            // console.log(token)
+            try{
+                await fetchData({token: token.current})
+                if(response.current.ok){
+                    userRef.current = await response.current.json()
+                    // console.log(data)
+                    setUser(await userRef.current)
+                    setUser(userRef.current)
+                    isLogin.current = true
+                }
+
+            }catch (e) {
+                console.log(e)
+            }
+        }
+    }
 
 
   function setRoleRef(role) {
@@ -16,32 +39,36 @@ export const AuthContextProvider=({children})=>{
 
     const login = (userData) => {
       // Store user data received from backend upon successful login
-      setUser(userData.data);
+      token.current = userData.token
+        fetchProfile()
       localStorage.setItem("token" , userData.token);
-      localStorage.setItem("user" , JSON.stringify(userData.data));
-        // setIsLogin(true)
+        // setIsLogin( true)
     };
 
-  const logout = () => {
-    // Clear user data upon logout
-    //   setIsLogin(false)
+  const resetUserData = () => {
      setUser(null);
-    // In a real app, you'd remove the JWT token from localStorage here
-    console.log("User signed out successfully.");
-
+      localStorage.removeItem("token");
+      isLogin.current =  false
   };
 
     return(
         <AuthContext.Provider value={{
             roleRef,
+            userRef,
             setRoleRef,
             user,
             login, 
-            logout
+            resetUserData,
+            isLogin,
+            fetchProfile,
+            reloadLoad,
+            token
         }}>
             {children}
         </AuthContext.Provider>
     )
 }
 
-export const useAuth =()=> useContext(AuthContext)
+export const useAuth =()=> {
+    return useContext(AuthContext)
+}

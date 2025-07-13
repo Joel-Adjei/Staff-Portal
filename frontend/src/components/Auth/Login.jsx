@@ -7,6 +7,9 @@ import * as Yup from 'yup';
 import { Formik , Form, Field, ErrorMessage } from "formik";
 import { useAuth } from "../../context/AuthContext";
 import MessageAlert from "../MessageAlert";
+import useFetch from "../../hooks/useFetch";
+import useToast from "../../hooks/useToast";
+import {ToastContainer} from "../../Toast";
 
 
 const Login =()=>{
@@ -14,18 +17,16 @@ const Login =()=>{
     const [isStaff, setIsStaff] = useState(true); // Default to staff tab for display purposes
     const [isTeaching, setIsTeaching] = useState(true); // Default to teaching staff tab for display purposes
     const [message, setMessage] = useState({ text: '', type: '' });
-    const [loading , setLoading] = useState(false)
+     const [endpoint , setEndpoint] = useState("/api/staff/login")
 
-    const { isLogin , login , roleRef , setRoleRef} = useAuth();
-    const { darkMode } = usePortal()
+    const {  login , roleRef , setRoleRef, } = useAuth();
+    const {fetchData ,response, loading} = useFetch({method:"POST" , endpoint: endpoint ,})
+    const {toasts, addToast, removeToast} = useToast()
+    const { darkMode , onLoad } = usePortal()
     const navigator = useNavigate()
 
     const inputStyle = `appearance-none rounded dark:bg-[#6F7FC0]/30 dark:border-[#EEA215] dark:text-white   bg-slate-100 border-blue-500 text-gray-700 border-b-[1px] w-full py-3 px-4 placeholder:italic leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent`
 
-
-    useEffect(()=>{
-      if(true)  navigator("/portal")
-    },[])
 
     const loginSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email').required('Email is required'),
@@ -34,55 +35,38 @@ const Login =()=>{
     
      const initialLoginValues = { email: '', password: '' };
 
-    const handleLoginSubmit = async (values, { setSubmitting }) => {
-        setMessage({ text: '', type: '' });
-        setLoading(true)
-        //https://staff-portal-qkp1.vercel.app/api
-	//http://localhost:1972/api
-        const API_BASE_URL = "https://staff-portal-qkp1.vercel.app/api"
-        try{
-            const response =  await fetch(`${API_BASE_URL}/auth/login`,
-              {
-                method : 'POST',
-                headers : {
-                  "Content-type" : "application/json"
-                },
-                body : JSON.stringify({
-                    "email": `${values.email}`,
-                    "password": `${values.password}`,
-                    "role": `${roleRef.current}`
-                })
-              }
+     useEffect(()=>{
+         setEndpoint( roleRef.current === "admin" ? "/api/admin/login" : "/api/staff/login")
+     },[isStaff])
 
-            );
-
-            const data = await response.json()
-
-            if(data.success){
-              setMessage({ text: data.message, type: 'success' });
-              console.log(data)
-              login(data) //fetch the real data from the response
-              navigator("/portal")
-            }else{
-              console.log(data)
-              setMessage({
-                text: 'Login failed. Please check your credentials',
-                type: 'error',
-            });
-              console.log("error" , data.message)
-            }
-          
-        } catch (error) { 
-            console.error("Login error:", error);
-            setMessage({
-                text: 'Login failed. Please try again.',
-                type: 'error',
-            });
-        } finally {
-            setSubmitting(false);
-            setLoading(false)
+    const handleLoginSubmit = async (values, { setSubmitting }) =>{
+        setSubmitting(true)
+        const payload = {
+          "email": `${values.email}`,
+          "password": `${values.password}`,
+           "role": `${roleRef.current}`
         }
-    };
+        try {
+              await fetchData({payload: payload} )
+            // console.log(response)
+            if(response.current.ok){
+                addToast("Login successful", 'success')
+                const data = await response.current.json()
+                 login(data)
+                onLoad()
+                navigator("/portal", {replace: true})
+            }else{
+                console.log("erorrr")
+                addToast("Login Failed, Please check your credientials", "error")
+            }
+        }catch (e) {
+            console.log(e)
+            setMessage({ text: "Login Failed, Please check your credientials", type: 'error' })
+        }finally {
+            setSubmitting(false)
+        }
+    }
+
 
     function toggleDisplayPass() {
         setDisplayPassword(type=> type === "password" ? "text" : "password")
@@ -91,7 +75,6 @@ const Login =()=>{
 
     return (
         <>
-        <MessageAlert message={message.text} type={message.type} />
                 <div className="flex gap-2 mb-3 justify-center">
                     <button
                         className={`px-6 py-2 rounded-md text-sm transition-colors duration-200 ${isStaff ? 'bg-orange-600 text-white' : 'bg-transparent text-gray-600 hover:bg-gray-200'}`}
@@ -211,6 +194,7 @@ const Login =()=>{
           )}
         </Formik>
         </div>
+            <ToastContainer toasts={toasts} removeToast={removeToast} />
         </>
     )
 }

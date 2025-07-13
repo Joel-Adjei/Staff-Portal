@@ -8,10 +8,21 @@ import {
 } from "lucide-react";
 import {usePortal} from "../../context/PortalContext";
 import NavigationPanelMobile from "./NavigationPanelMobile";
+import {useNavigate} from "react-router-dom";
 
 const NavigationPanel=()=>{
-    const {roleRef , logout} = useAuth()
+    const navigator = useNavigate()
+    const {roleRef , resetUserData} = useAuth()
     const { showPanel } = usePortal()
+
+    const logout = () => {
+        // Clear user data upon logout
+        resetUserData();
+        navigator("/auth/login")
+        // In a real app, you'd remove the JWT token from localStorage here
+        console.log("User signed out successfully.");
+    };
+
     return(
         <>
             {/* Sidebar */}
@@ -62,7 +73,7 @@ const NavigationPanel=()=>{
                     <div>
                         <div  className="bottom-0 mt-auto pt-5 border-t border-gray-400 dark:border-blue-200"> {/* Pushes logout to bottom */}
                             <button
-                                // onClick={logout}
+                                onClick={logout}
                                 className="flex items-center w-full p-3 rounded-lg text-left text-gray-200 hover:bg-blue-300 hover:text-white transition-all duration-200 ease-in-out"
                             >
                                 <LogOut className="mr-3 h-5 w-5 text-blue-950 dark:text-blue-200 " />

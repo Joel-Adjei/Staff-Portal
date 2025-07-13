@@ -6,14 +6,20 @@ import * as Yup from 'yup';
 import AppInput from "../../components/basic/input/AppInput";
 import Header from "../../components/basic/Header";
 import Button from "../../components/basic/button/Button";
+import {ToastContainer} from "../../Toast";
+import useToast from "../../hooks/useToast";
 
 const SuggestionBox = () => {
     const [message, setMessage] = useState({ text: '', type: '' });
+    const {toasts, addToast, removeToast} = useToast()
+
+
     const validationSchema = Yup.object().shape({
         suggestion: Yup.string().required('Suggestion cannot be empty').min(10, 'Suggestion must be at least 10 characters'),
     });
 
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+
         setMessage({ text: '', type: '' });
         try {
             // const response = await axios.post(`${API_BASE_URL}/staff/suggestions`, { message: values.suggestion });
@@ -31,15 +37,16 @@ const SuggestionBox = () => {
             });
         } finally {
             setSubmitting(false);
+            resetForm()
         }
     };
 
     return (
         <div className="p-6">
+            <ToastContainer toasts={toasts} removeToast={removeToast} />
             <Header
                Icon={Lightbulb} title={"Suggestion Box (Anonymous)"}
             />
-            <MessageAlert message={message.text} type={message.type} />
             <Formik
                 initialValues={{ suggestion: '' }}
                 validationSchema={validationSchema}
