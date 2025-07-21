@@ -8,8 +8,8 @@ const useFetch =({method="GET",endpoint })=>{
     async function fetchData({payload, token}) {
         setLoading(true)
 
-        //https://staff-portal-qkp1.vercel.app/api
-        const API_BASE_URL = "http://localhost:3000"
+        // http://localhost:3000
+        const API_BASE_URL = "https://khms-backend.onrender.com"
 
         try{
              response.current =  await fetch(`${API_BASE_URL}${endpoint}`,
