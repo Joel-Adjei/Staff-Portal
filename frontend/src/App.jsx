@@ -9,6 +9,14 @@ import {AuthContextProvider, useAuth} from './context/AuthContext'
 import PortalLayout from "./layout/PortalLayout";
 import SuggestionBox from "./pages/staff/SuggestionBox";
 import ApplyForLeave from "./pages/staff/ApplyForLeave";
+import AddStaff from "./pages/admin/AddStaff";
+import UpdateProfile from "./pages/UpdateProfile";
+import SubmitTeachingMaterial from "./pages/staff/SubmitTeachingMaterial";
+import SubmitPerformance from "./pages/staff/SubmitPerformance";
+import ManageStaff from "./pages/admin/ManageStaff";
+import PostAnnouncement from "./pages/admin/PostAnnouncement";
+import ReviewLeave from "./pages/admin/ReviewLeave";
+import ReviewSuggestions from "./pages/admin/ReviewSuggestions";
 
 function App() {
 
@@ -22,6 +30,14 @@ function App() {
               <Route index element={<Dashboard />} />
               <Route path={"suggestion-box"} element={<SuggestionBox />} />
               <Route path={"apply-for-leave"} element={<ApplyForLeave />} />
+              <Route path={"manageStaff"} element={<ManageStaff />} />
+              <Route path={"addStaff"} element={<AddStaff />} />
+              <Route path={"updateProfile"} element={<UpdateProfile />} />
+              <Route path={"submit-teaching-materials"} element={<SubmitTeachingMaterial />} />
+              <Route path={"submit-performance"} element={<SubmitPerformance />} />
+              <Route path={"post-announcement"} element={<PostAnnouncement />} />
+              <Route path={"review-leave"} element={<ReviewLeave />} />
+              <Route path={"review-suggestions"} element={<ReviewSuggestions />} />
           </Route>
       </Route>
     )

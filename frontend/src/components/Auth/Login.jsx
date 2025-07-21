@@ -19,10 +19,10 @@ const Login =()=>{
     const [message, setMessage] = useState({ text: '', type: '' });
      const [endpoint , setEndpoint] = useState("/api/staff/login")
 
-    const {  login , roleRef , setRoleRef, } = useAuth();
-    const {fetchData ,response, loading} = useFetch({method:"POST" , endpoint: endpoint ,})
+    const {  loginStaff ,loginAdmin , roleRef , setRoleRef, } = useAuth();
+    const {fetchData ,response} = useFetch({method:"POST" , endpoint: endpoint ,})
     const {toasts, addToast, removeToast} = useToast()
-    const { darkMode , onLoad } = usePortal()
+    const { darkMode , onLoad , setLoading} = usePortal()
     const navigator = useNavigate()
 
     const inputStyle = `appearance-none rounded dark:bg-[#6F7FC0]/30 dark:border-[#EEA215] dark:text-white   bg-slate-100 border-blue-500 text-gray-700 border-b-[1px] w-full py-3 px-4 placeholder:italic leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent`
@@ -52,7 +52,7 @@ const Login =()=>{
             if(response.current.ok){
                 addToast("Login successful", 'success')
                 const data = await response.current.json()
-                 login(data)
+                 roleRef.current === "admin" ? loginAdmin(data) : loginStaff(data)
                 onLoad()
                 navigator("/portal", {replace: true})
             }else{
@@ -61,7 +61,7 @@ const Login =()=>{
             }
         }catch (e) {
             console.log(e)
-            setMessage({ text: "Login Failed, Please check your credientials", type: 'error' })
+            addToast( "Login Failed, check your internet and try again", 'error' )
         }finally {
             setSubmitting(false)
         }
@@ -187,7 +187,7 @@ const Login =()=>{
                   disabled={isSubmitting}
                   className={`mx-auto mt-2 focus:outline-none  focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
-                    {loading ? "Processing" : "Login"}
+                    {isSubmitting ? "Processing" : "Login"}
                 </Button>
               </div>
             </Form>

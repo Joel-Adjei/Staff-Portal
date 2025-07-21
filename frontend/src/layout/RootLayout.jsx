@@ -18,17 +18,14 @@ const RootLayout = () => {
       user == null && fetchProfile()
   },[isLogin.current])
 
-    if(loading){
-        return <div>Loading... </div>
-    }else {
   return (
       <>
           <div className={'h-[100vh] dark:bg-deep_blue_black'} >
-              {loading ? <div>Loading... </div>:<Outlet/>}
+              <Outlet/>
           </div>
       </>
 
-  )}
+  )
 }
 
 export default RootLayout

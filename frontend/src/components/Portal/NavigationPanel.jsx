@@ -37,8 +37,17 @@ const NavigationPanel=()=>{
                         />
                         {roleRef.current === 'teaching' && (
                             <>
-                                <NavigationItem icon={BookOpen} label="Submit Materials" viewName="submit-materials" />
-                                <NavigationItem icon={GraduationCap} label="Performance Reports" viewName="performance-reports" />
+                                <NavigationItem
+                                    icon={BookOpen}
+                                    label="Submit Materials"
+                                    viewName="submit-materials"
+                                    to={"/portal/submit-teaching-materials"}
+                                />
+                                <NavigationItem
+                                    icon={GraduationCap}
+                                    label="Performance Reports"
+                                    viewName="performance-reports"
+                                />
                             </>
                         )}
 
@@ -60,12 +69,32 @@ const NavigationPanel=()=>{
                         )}
                         {roleRef.current === 'admin' && (
                             <>
-                                <NavigationItem icon={User} label="Manage Staff" viewName="manage-staff" />
+                                <NavigationItem
+                                    icon={User}
+                                    label="Manage Staff"
+                                    viewName="manage-staff"
+                                    to={"/portal/manageStaff"}
+                                />
                                 <NavigationItem icon={CheckSquare} label="Grant Privileges" viewName="grant-privileges" />
                                 <NavigationItem icon={ClipboardList} label="Review Materials" viewName="review-materials" />
-                                <NavigationItem icon={Megaphone} label="Post Announcement" viewName="post-announcement" />
-                                <NavigationItem icon={FileText} label="Review Leave" viewName="review-leave" />
-                                <NavigationItem icon={MessageSquare} label="Review Suggestions" viewName="review-suggestions" />
+                                <NavigationItem
+                                    icon={Megaphone}
+                                    label="Post Announcement"
+                                    viewName="post-announcement"
+                                    to={"/portal/post-announcement"}
+                                />
+                                <NavigationItem
+                                    icon={FileText}
+                                    label="Review Leave"
+                                    viewName="review-leave"
+                                    to={"/portal/review-leave"}
+                                />
+                                <NavigationItem
+                                    icon={MessageSquare}
+                                    label="Review Suggestions"
+                                    viewName="review-suggestions"
+                                    to={"/portal/review-suggestions"}
+                                />
                             </>
                         )}
 

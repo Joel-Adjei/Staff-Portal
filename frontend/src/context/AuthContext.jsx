@@ -10,6 +10,9 @@ export const AuthContextProvider=({children})=>{
     const [user, setUser] = useState(null); // User object from backend API (e.g., { id, email, fullName, role })
     let isLogin = useRef(false)
 
+    const staff = useRef([]);
+
+    const { fetchData : fetchStaff  , response: staffResponse} = useFetch({endpoint: "/users/admin/staffProfiles"})
     const {loading : reloadLoad , fetchData  , response} = useFetch({endpoint: "/users/staff/profile"})
 
      const fetchProfile = async ()=> {
@@ -32,23 +35,49 @@ export const AuthContextProvider=({children})=>{
         }
     }
 
+    const fetchAllStaffs = async ()=> {
+        try{
+            await fetchStaff({token: token.current})
+            if(staffResponse.current.ok){
+                const data =await staffResponse.current.json()
+                staff.current = data;
+                console.log(data)
+            }
+
+        }catch (e) {
+            console.log(e)
+        }
+    }
+
 
   function setRoleRef(role) {
       roleRef.current = role;
   }
 
-    const login = (userData) => {
+    const loginStaff = async (userData) => {
+      // Store user data received from backend upon successful login
+        token.current = userData.token
+        await fetchProfile()
+        localStorage.setItem("token" , userData.token);
+        // setIsLogin( true)
+    };
+
+    const loginAdmin = async (userData) => {
       // Store user data received from backend upon successful login
       token.current = userData.token
-        fetchProfile()
+       userRef.current = userData.user
+        setUser(userData.user)
+        isLogin.current = true
+        console.log(userData)
       localStorage.setItem("token" , userData.token);
-        // setIsLogin( true)
     };
 
   const resetUserData = () => {
      setUser(null);
+     userRef.current = null
       localStorage.removeItem("token");
       isLogin.current =  false
+      roleRef.current = "teaching"
   };
 
     return(
@@ -57,12 +86,15 @@ export const AuthContextProvider=({children})=>{
             userRef,
             setRoleRef,
             user,
-            login, 
+            loginStaff,
+            loginAdmin,
             resetUserData,
             isLogin,
             fetchProfile,
             reloadLoad,
-            token
+            token,
+            staff,
+            fetchAllStaffs
         }}>
             {children}
         </AuthContext.Provider>

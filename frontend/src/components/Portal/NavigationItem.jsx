@@ -4,13 +4,19 @@ import {NavLink} from "react-router-dom"
 import {usePortal} from "../../context/PortalContext";
 
 const NavigationItem = ({ icon: Icon, label, to , active , onClick , viewName }) => {
-    const { currentPage , setCurrentPage} = usePortal()
+    const { currentPage , setCurrentPage , setLoading} = usePortal()
 
     return <li className="mb-2">
         <NavLink className={'nav-item'} to={to} >
         <button
-            onClick={()=> setCurrentPage(viewName)}
-            className={`flex items-center text-font-color w-full p-3 rounded-r-full text-left transition-all duration-200 ease-in-out
+            onClick={()=> {
+                setLoading(true)
+                setTimeout(()=>{
+                    setLoading(false)
+                }, 2000)
+                setCurrentPage(viewName)
+            }}
+            className={`flex items-center text-font-color w-full p-2.5 rounded-r-full text-left transition-all duration-200 ease-in-out
             ${active ? 'bg-orange-color': ''}
             hover:bg-blue-300/20
             dark:text-blue-200

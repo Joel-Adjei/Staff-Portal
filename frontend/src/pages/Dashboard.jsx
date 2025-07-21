@@ -9,13 +9,10 @@ const Dashboard = () => {
   const { user: userData , userRef, roleRef , fetchProfile } = useAuth()
   const navigator = useNavigate()
 
-  useEffect(()=>{
-    userData == null && fetchProfile()
-  },[])
 
   return (
       <>
-        {  userData == null ? <PortalLoading /> :
+        {  userRef.current == null ? <PortalLoading /> :
   <div className="p-6">
     <section className={"flex flex-col items-center py-3"}>
       <h4 className={"mx-auto text-5xl font-bold text-orange-color mb-4"}>Welcome</h4>

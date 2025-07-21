@@ -1,9 +1,11 @@
 import React, { useState, useRef } from 'react';
+import {useNavigate} from 'react-router-dom'
 import {User, X, Settings, Bell, LogOut, Edit, Mail, Phone, MapPin, Calendar, Moon, Sun} from 'lucide-react';
 import {usePortal} from "../context/PortalContext";
 import {useAuth} from "../context/AuthContext";
 
 const ProfilePanel = () => {
+    const navigator = useNavigate()
     const panelRef = useRef(null);
     const {isOpen,  toggleProfilePanel , toggleDarkMode , handleThemeChange} = usePortal()
     const {userRef}  = useAuth()
@@ -37,10 +39,10 @@ const ProfilePanel = () => {
                                     <div className="w-[130px] h-[130px] bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
                                         <User className="w-[100px] h-[100px]" />
                                     </div>
-                                    <div>
+                                    {userRef.current && <div>
                                         <h3 className="text-3xl text-orange-color text-center font-semibold">{userRef.current.name}</h3>
                                         <p className="bg-gradient-to-r from-orange-500 to-orange-600 mt-2 rounded-full text-white text-center">{userRef.current.role}</p>
-                                    </div>
+                                    </div>}
                                 </div>
 
                             </div>
@@ -60,19 +62,31 @@ const ProfilePanel = () => {
 
 
                             {/* Profile Details */}
+                            { userRef.current &&
                             <div className="p-6 space-y-4">
                                 <div className="flex items-center space-x-3 text-gray-700 dark:text-blue-200">
-                                    <Mail className="w-4 h-4 text-orange-color" />
+                                    <Mail className="w-4 h-4 text-orange-color"/>
                                     <span className="text-sm">{userRef.current.email}</span>
                                 </div>
                                 <div className="flex items-center space-x-3 text-gray-700 dark:text-blue-200">
-                                    <Phone className="w-4 h-4 text-orange-color" />
-                                    <span className="text-sm">+1 (555) 123-4567</span>
+                                    <Phone className="w-4 h-4 text-orange-color"/>
+                                    <span className="text-sm">+{userRef.current.contact}</span>
                                 </div>
                                 <div className="flex items-center space-x-3 text-gray-700 dark:text-blue-200">
-                                    <MapPin className="w-4 h-4 text-orange-color" />
-                                    <span className="text-sm">{userRef.current.location}</span>
+                                    <MapPin className="w-4 h-4 text-orange-color"/>
+                                    <span className="text-sm">{userRef.current.address}</span>
                                 </div>
+                            </div>
+                            }
+
+                            <div>
+                                <button
+                                    onClick={()=> navigator("/portal/updateProfile")}
+                                    className={`border p-2 rounded
+                                    dark:text-blue-200 dark:border-blue-200`}
+                                >
+                                    Edit Profile
+                                </button>
                             </div>
 
                         </div>

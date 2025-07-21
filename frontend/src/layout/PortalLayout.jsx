@@ -1,28 +1,18 @@
 import React, {useEffect, useRef, useState} from "react";
 import NavigationPanel from "../components/Portal/NavigationPanel";
-import {Outlet, useNavigate, useLoaderData} from 'react-router-dom'
+import {Outlet, useNavigate} from 'react-router-dom'
 import NavBar from "../components/Portal/NavBar";
 import {usePortal} from "../context/PortalContext";
 import {useAuth} from "../context/AuthContext";
 import ProfilePanel from "../components/ProfilePanel";
+import PortalLoading from "../components/basic/loading/PortalLoading";
+import AppLoading from "../components/basic/loading/AppLoading";
 
 const PortalLayout =()=>{
-    const alert = useRef(false)
     const navigator = useNavigate()
     const { showPanel , loading} = usePortal()
-    const {userRef} = useAuth();
 
-    // useEffect(()=>{
-    //     if(userRef.subject == null || userRef.classTaught==null || userRef.contact==null){
-    //         alert.current = true
-    //     }else{
-    //         alert.current = false
-    //     }
-    // },[])
 
-    if(loading){
-        return <div>Loading... </div>
-    } else {
     return(
         <>
             {
@@ -33,13 +23,13 @@ const PortalLayout =()=>{
                         <ProfilePanel />
                         <NavigationPanel />
                         <div className={`flex-1 ${ showPanel === "md:flex" && "md:pl-[255px]"} h-[100%] dark:bg-deep_blue_black pt-[40px]`}>
-                             <Outlet/>
+                            {loading ? <AppLoading /> : <Outlet/>}
                         </div>
                     </div>
                 </div>
             }
         </>
-    )}
+    )
 }
 
 export default PortalLayout

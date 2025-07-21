@@ -74,7 +74,7 @@ const Toast = ({ message, type = 'info', duration = 4000, onClose }) => {
 
 export const ToastContainer = ({ toasts, removeToast }) => {
   return (
-      <div className="fixed top-4 right-2 sm:right-4 z-50 space-y-2 max-w-sm">
+      <div className="fixed top-4 right-2 sm:right-4 z-[70] space-y-2 max-w-sm">
         {toasts.map((toast) => (
             <Toast
                 key={toast.id}
