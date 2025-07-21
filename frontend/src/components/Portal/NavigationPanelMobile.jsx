@@ -41,12 +41,12 @@ const NavigationPanelMobile =()=> {
     const { showPanelMobile, togglePanelMobile} = usePortal()
     return(
         <>
-            <div className={`fixed ${showPanelMobile} top-0 w-full h-[100vh] bg-gray-900/50 z-0 md:hidden`}
+            <div className={`fixed ${showPanelMobile} top-0 w-full h-[100dvh] bg-gray-900/50 z-0 md:hidden`}
                  onClick={()=> togglePanelMobile()}
             >
             </div>
             {/* Sidebar */}
-            <aside className={`w-[250px] h-[100vh] pt-[60px] fixed bottom-0 dark:bg-blue-950 left-0 bg-[#FBFBFB] p-2 pl-0 shadow-xl ${showPanelMobile} flex-col border-r-[2px] border-[#FF970B] rounded-r-3xl z-20 md:hidden`}>
+            <aside className={`w-[250px] h-[100dvh] pt-[60px] fixed bottom-0 dark:bg-blue-950 left-0 bg-[#FBFBFB] p-2 pl-0 shadow-xl ${showPanelMobile} flex-col border-r-[2px] border-[#FF970B] rounded-r-3xl z-20 md:hidden`}>
                 <nav className=" w-full h-full flex flex-col justify-between">
                     <ul>
                         <NavigationItem
@@ -122,7 +122,7 @@ const NavigationPanelMobile =()=> {
                     <div>
                         <div className="bottom-0 mt-auto pt-6 border-t border-gray-700"> {/* Pushes logout to bottom */}
                             <button
-                                onClick={logout}
+                                onClick={()=>logout()}
                                 className="flex items-center w-full p-3 rounded-lg text-left text-gray-200 hover:bg-blue-300 hover:text-white transition-all duration-200 ease-in-out"
                             >
                                 {/*<LogIn className="mr-3 h-5 w-5" />*/}
