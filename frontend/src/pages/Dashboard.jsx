@@ -2,7 +2,8 @@ import React, {useEffect} from 'react'
 import { useNavigate} from 'react-router-dom'
 import { useAuth } from '../context/AuthContext';
 import {usePortal} from "../context/PortalContext";
-import PortalLoading from "../components/basic/loading/PortalLoading";
+import AppLoading from '../components/basic/loading/AppLoading';
+import AdminDashboard from './admin/AdminDashboard';
 
 
 const Dashboard = () => {
@@ -12,7 +13,9 @@ const Dashboard = () => {
 
   return (
       <>
-        {  userRef.current == null ? <PortalLoading /> :
+        {  userRef.current == null ? <AppLoading /> : roleRef.current == "admin" ? (
+          <AdminDashboard />
+        ) :
   <div className="p-6">
     <section className={"flex flex-col items-center py-3"}>
       <h4 className={"mx-auto text-5xl font-bold text-orange-color mb-4"}>Welcome</h4>
@@ -63,7 +66,7 @@ const Dashboard = () => {
   </div>
       }
       </>
-  )
+    )
 }
 
 export default Dashboard

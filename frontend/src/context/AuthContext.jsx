@@ -10,7 +10,8 @@ export const AuthContextProvider=({children})=>{
     const [user, setUser] = useState(null); // User object from backend API (e.g., { id, email, fullName, role })
     let isLogin = useRef(false)
 
-    const staff = useRef([]);
+    //const staff = useRef([]);
+	const [staff , setStaff] = useState([])
 
     const { fetchData : fetchStaff  , response: staffResponse} = useFetch({endpoint: "/users/admin/staffProfiles"})
     const {loading : reloadLoad , fetchData  , response} = useFetch({endpoint: "/users/staff/profile"})
@@ -39,8 +40,8 @@ export const AuthContextProvider=({children})=>{
         try{
             await fetchStaff({token: token.current})
             if(staffResponse.current.ok){
-                const data =await staffResponse.current.json()
-                staff.current = data;
+                const data = await staffResponse.current.json()
+                setStaff(data);
                 console.log(data)
             }
 

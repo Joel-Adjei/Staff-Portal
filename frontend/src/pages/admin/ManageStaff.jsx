@@ -11,6 +11,7 @@ import {usePortal} from "../../context/PortalContext";
 import AppModal from "../../components/basic/AppModal";
 
 const ManageStaff = () => {
+    const [staffToDelete , setStaffToDelete] = useState(null)
     const {toasts, addToast, removeToast} = useToast()
     const { token , staff , fetchAllStaffs } = useAuth()
     const { loading, setLoading } = usePortal()
@@ -29,11 +30,11 @@ const ManageStaff = () => {
         try{
             await deleteStaff({token: token.current , payload: payload})
             if(deleteResponse.current.ok){
-                const data =await deleteResponse.current.json()
+                const data = await deleteResponse.current.json()
                 addToast("staff deleted successful" , "success" , 6000)
                 console.log(data)
+		fetchAllStaffs()
             }
-            fetchAllStaffs()
 
         }catch (e) {
             console.log(e)
@@ -45,9 +46,7 @@ const ManageStaff = () => {
     }
     // Initialize users
     useEffect(() => {
-        staff.current.length === 0 && fetchAllStaffs()
-        console.log([].length)
-        console.log(staff.current.length === 0)
+        staff.length === 0 && fetchAllStaffs()
     }, []);
 
 
@@ -82,18 +81,6 @@ const ManageStaff = () => {
 
         return (
             <>
-                {displayConfirmDelete &&
-                <AppModal
-                    text={`Do you want to delete ${user.name}`}
-                    onYes={() => {
-                        // delStaff(user.email)
-                        console.log(staff.current.filter(({email})=>email == user.email))
-                        setDisplayConfirmDelete(false)
-                    }}
-                    onCancel={()=>setDisplayConfirmDelete(false)}
-                />
-                }
-
                 <tr
                     className={`border-b border-gray-200 dark:bg-blue-950 hover:bg-gray-50 transition-all duration-300 `}
                 > {user.email &&
@@ -127,7 +114,11 @@ const ManageStaff = () => {
                             <button className="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-50 transition-colors">
                                 <Trash2
                                     className="w-4 h-4"
-                                    onClick={()=>setDisplayConfirmDelete (true)}
+                                    onClick={()=>{
+                                        setStaffToDelete(staff.filter(({email})=>email == user.email))
+                                        console.log(staff.filter(({email})=>email == user.email))
+                                        setDisplayConfirmDelete (true)
+                                    }}
                                 />
                             </button>
                         </div>
@@ -143,6 +134,18 @@ const ManageStaff = () => {
     return (
         <div className="p-4 min-h-screen ">
 
+            {displayConfirmDelete &&
+                <AppModal
+                    text={`Do you want to delete ${staffToDelete[0].name}`}
+                    onYes={() => {
+                         delStaff(staffToDelete[0].email)
+                        console.log(staffToDelete[0])
+                        setDisplayConfirmDelete(false)
+                    }}
+                    onCancel={()=>setDisplayConfirmDelete(false)}
+                />
+            }
+
             <ToastContainer toasts={toasts} removeToast={removeToast} />
             {/* Header */}
             <Header Icon={Users} title={"All Staffs"} />
@@ -155,7 +158,7 @@ const ManageStaff = () => {
                     Add Staff
                 </OutlineButton>
                 <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-lg text-sm font-medium">
-                    {staff.current.length} users
+                    {staff.length} users
                 </span>
             </div>
 
@@ -164,7 +167,7 @@ const ManageStaff = () => {
 
 
                 {/* Table */}
-                {staff.current &&
+                {staff &&
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-gray-200">
@@ -197,7 +200,7 @@ const ManageStaff = () => {
                             </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
-                            {staff.current.map((user) => (
+                            {staff.map((user) => (
                                 <>
                                     <TableRow key={user.id} user={user} />
                                 </>
@@ -207,7 +210,7 @@ const ManageStaff = () => {
                         </table>
                     </div>
 
-                    {staff.current.length === 0 && (
+                    {staff.length === 0 && (
                         <div className="text-center py-12">
                             <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                             <h3 className="text-lg font-medium text-gray-900 mb-2">No users found</h3>

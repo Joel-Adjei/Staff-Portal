@@ -8,7 +8,7 @@ const useFetch =({method="GET",endpoint })=>{
     async function fetchData({payload, token}) {
         setLoading(true)
 
-        // http://localhost:3000
+        // http://localhost:3000 || https://khms-backend.onrender.com
         const API_BASE_URL = "https://khms-backend.onrender.com"
 
         try{

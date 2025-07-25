@@ -10,7 +10,9 @@ const ReviewLeave = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [message, setMessage] = useState('');
-    const {fetchData , response} = useFetch({endpoint : "/users/admin/leaveApplications"})
+    const {fetchData , response} = useFetch({endpoint : "/users/admin/leaveApplications"});
+    const [statusEndpoint , setStatusEndpoint ] = useState("/users/admin/LeaveApplication/approve")
+    const {fetchData: updatingStatus , response: statusResponse} = useFetch({method: "PUT" , endpoint : statusEndpoint})
     const {token} = useAuth()
 
     const fetchApplications = async () => {
@@ -18,10 +20,11 @@ const ReviewLeave = () => {
         setError(null);
         try {
             await fetchData({token: token.current})
-            // if(response.current.ok){
-            //     await setApplications(response.current.json());
-            // }
-            console.log(response.current)
+             if(response.current.ok){
+		const data = await response.current.json()
+            	console.log(data)
+                 await setApplications(data);
+             }
         } catch (err) {
             setError(`Failed to fetch applications: ${err.response?.data?.message || err.message || 'Server error'}`);
         } finally {
@@ -33,11 +36,20 @@ const ReviewLeave = () => {
         fetchApplications();
     }, []);
 
-    const updateApplicationStatus = async (id, newStatus) => {
+    const updateApplicationStatus = async (email, newStatus) => {
+        setStatusEndpoint( newStatus === 'Approved' ? "/users/admin/LeaveApplication/approve" : "/users/admin/LeaveApplication/reject")
         setMessage('');
         try {
-            await api.put(`/admin/leave-applications/${id}/status`, { status: newStatus });
-            setMessage(`Application status updated to ${newStatus}!`);
+            const payload ={
+                "email" : email
+            }
+            await updatingStatus({ payload : payload, token: token })
+            if(statusResponse.current.ok){
+                const data = await statusResponse.current.json()
+                console.log(data)
+                setMessage(`Application status updated to ${newStatus}!`);
+                fetchApplications();
+            }
             // fetchApplications(); // Refresh the list
         } catch (err) {
             setMessage(`Status update failed: ${err.response?.data?.message || err.message || 'Server error'}`);
@@ -59,9 +71,7 @@ const ReviewLeave = () => {
                     <thead className="bg-gray-50 text-gray-500 dark:bg-blue-300 dark:text-blue-950 dark:border-none">
                     <tr>
                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Staff</th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Type</th>
                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Dates</th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Reason</th>
                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Status</th>
                         <th scope="col" className="relative px-6 py-3"><span className="sr-only">Actions</span></th>
                     </tr>
@@ -72,10 +82,8 @@ const ReviewLeave = () => {
                     ) : (
                         applications.map((app) => (
                             <tr key={app.id}>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{app.staff}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{app.type}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{app.startDate} to {app.endDate}</td>
-                                <td className="px-6 py-4 text-sm text-gray-500">{app.reason} <a href={app.letterUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">(Letter)</a></td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{app.name}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{app.start_date} to {app.end_date}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                                         <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                                             app.status === 'Approved' ? 'bg-green-100 text-green-800' :
@@ -86,10 +94,10 @@ const ReviewLeave = () => {
                                         </span>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    {app.status === 'Pending' && (
+                                    {app.status === 'pending' && (
                                         <>
-                                            <Button onClick={() => updateApplicationStatus(app.id, 'Approved')} className="bg-green-600 hover:bg-green-700 text-sm py-1 px-3 mr-2">Approve</Button>
-                                            <Button onClick={() => updateApplicationStatus(app.id, 'Rejected')} className="bg-red-600 hover:bg-red-700 text-sm py-1 px-3">Reject</Button>
+                                            <Button onClick={() => updateApplicationStatus(app.email, 'Approved')} className="bg-green-600 hover:bg-green-700 text-sm py-1 px-3 mr-2">Approve</Button>
+                                            <Button onClick={() => updateApplicationStatus(app.email, 'Rejected')} className="bg-red-600 hover:bg-red-700 text-sm py-1 px-3">Reject</Button>
                                         </>
                                     )}
                                 </td>
