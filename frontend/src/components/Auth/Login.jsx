@@ -62,7 +62,7 @@ const Login =()=>{
             }
         }catch (e) {
             console.log(e)
-            addToast( "Login Failed, check your internet and try again", 'error' )
+            addToast( "Login Failed, please try again", 'error' )
         }finally {
             setSubmitting(false)
         }
