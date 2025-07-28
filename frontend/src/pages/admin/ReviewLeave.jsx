@@ -1,4 +1,5 @@
 import React, {useState , useEffect} from "react";
+import {useNavigate} from 'react-router-dom'
 import Button from "../../components/basic/button/Button";
 import Header from "../../components/basic/Header";
 import useFetch from "../../hooks/useFetch";
@@ -14,6 +15,7 @@ const ReviewLeave = () => {
     const [statusEndpoint , setStatusEndpoint ] = useState("/users/admin/LeaveApplication/approve")
     const {fetchData: updatingStatus , response: statusResponse} = useFetch({method: "PUT" , endpoint : statusEndpoint})
     const {token} = useAuth()
+    const navigator = useNavigate()
 
     const fetchApplications = async () => {
         setLoading(true);
@@ -81,7 +83,9 @@ const ReviewLeave = () => {
                         <tr><td colSpan="6" className="px-6 py-4 text-center text-gray-500">No leave applications to review.</td></tr>
                     ) : (
                         applications.map((app) => (
-                            <tr key={app.id}>
+                            <tr key={app.id}
+                                onClick={()=> navigator(`/portal/review-leave/${app.id}`)}
+                            >
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{app.name}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{app.start_date} to {app.end_date}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm">

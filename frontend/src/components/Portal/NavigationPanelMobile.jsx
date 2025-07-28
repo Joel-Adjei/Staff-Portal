@@ -6,7 +6,7 @@ import {
     Megaphone, MessageSquare, LogOut
 } from "lucide-react";
 import {usePortal} from "../../context/PortalContext";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 
 const NavigationItem = ({ icon: Icon, label, to , active , viewName }) => {
     const { currentPage , setCurrentPage , togglePanelMobile , setLoading } = usePortal()
@@ -23,7 +23,7 @@ const NavigationItem = ({ icon: Icon, label, to , active , viewName }) => {
                     togglePanelMobile()
                     setCurrentPage(viewName)
                 }}
-                className={`flex items-center text-font-color w-full p-3 rounded-r-full text-left transition-all duration-200 ease-in-out
+                className={`flex items-center text-font-color w-full p-2 rounded-r-full text-left transition-all duration-200 ease-in-out
             ${active ? 'bg-orange-color': ''}
             hover:bg-blue-300/20
             ${currentPage == viewName && "bg-gradient-to-r from-orange-500 to-orange-600 hover:bg-orange-color text-white dark:text-white "}
@@ -37,8 +37,18 @@ const NavigationItem = ({ icon: Icon, label, to , active , viewName }) => {
 };
 
 const NavigationPanelMobile =()=> {
-    const {roleRef  , logout} = useAuth()
+    const navigator = useNavigate()
+    const {roleRef , resetUserData  } = useAuth()
     const { showPanelMobile, togglePanelMobile} = usePortal()
+
+    const logout = () => {
+        // Clear user data upon logout
+        resetUserData();
+        navigator("/auth/login")
+        // In a real app, you'd remove the JWT token from localStorage here
+        console.log("User signed out successfully.");
+    };
+
     return(
         <>
             <div className={`fixed ${showPanelMobile} top-0 w-full h-[100dvh] bg-gray-900/50 z-0 md:hidden`}
@@ -46,7 +56,7 @@ const NavigationPanelMobile =()=> {
             >
             </div>
             {/* Sidebar */}
-            <aside className={`w-[250px] h-[100dvh] pt-[60px] fixed bottom-0 dark:bg-blue-950 left-0 bg-[#FBFBFB] p-2 pl-0 shadow-xl ${showPanelMobile} flex-col border-r-[2px] border-[#FF970B] rounded-r-3xl z-20 md:hidden`}>
+            <aside className={`w-[230px] h-[100dvh] pt-[60px] fixed bottom-0 dark:bg-blue-950 left-0 bg-[#FBFBFB] p-2 pl-0 shadow-2xl ${showPanelMobile} flex-col rounded-r-3xl z-20 md:hidden`}>
                 <nav className=" w-full h-full flex flex-col justify-between">
                     <ul>
                         <NavigationItem
@@ -122,7 +132,7 @@ const NavigationPanelMobile =()=> {
                     <div>
                         <div className="bottom-0 mt-auto pt-6 border-t border-gray-700"> {/* Pushes logout to bottom */}
                             <button
-                                onClick={()=>logout()}
+                                onClick={logout}
                                 className="flex items-center w-full p-3 rounded-lg text-left text-gray-200 hover:bg-blue-300 hover:text-white transition-all duration-200 ease-in-out"
                             >
                                 {/*<LogIn className="mr-3 h-5 w-5" />*/}

@@ -14,16 +14,18 @@ export const AuthContextProvider=({children})=>{
 	const [staff , setStaff] = useState([])
 
     const { fetchData : fetchStaff  , response: staffResponse} = useFetch({endpoint: "/users/admin/staffProfiles"})
-    const {loading : reloadLoad , fetchData  , response} = useFetch({endpoint: "/users/staff/profile"})
+    const {loading : reloadLoad , fetchData:fetchStaffData  , response} = useFetch({endpoint: "/users/staff/profile"})
+    const { fetchData: fetchProfileData  , response: profileResponse} = useFetch({endpoint: "/users/user/profile"})
 
      const fetchProfile = async ()=> {
         if(localStorage.getItem("token") !== null){
             token.current = ( localStorage.getItem("token") )
             // console.log(token)
             try{
-                await fetchData({token: token.current})
-                if(response.current.ok){
-                    userRef.current = await response.current.json()
+                await fetchProfileData({token: token.current})
+                if(profileResponse.current.ok){
+                    userRef.current = await profileResponse.current.json()
+                    roleRef.current = userRef.current.role
                     // console.log(data)
                     setUser(await userRef.current)
                     setUser(userRef.current)
@@ -68,6 +70,8 @@ export const AuthContextProvider=({children})=>{
       token.current = userData.token
        userRef.current = userData.user
         setUser(userData.user)
+        await fetchProfile()
+        localStorage.setItem("token" , userData.token);
         isLogin.current = true
         console.log(userData)
       localStorage.setItem("token" , userData.token);

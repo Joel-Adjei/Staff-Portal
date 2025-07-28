@@ -17,6 +17,7 @@ import ManageStaff from "./pages/admin/ManageStaff";
 import PostAnnouncement from "./pages/admin/PostAnnouncement";
 import ReviewLeave from "./pages/admin/ReviewLeave";
 import ReviewSuggestions from "./pages/admin/ReviewSuggestions";
+import LeaveDetails from "./components/others/LeaveDetails";
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
               <Route path={"submit-performance"} element={<SubmitPerformance />} />
               <Route path={"post-announcement"} element={<PostAnnouncement />} />
               <Route path={"review-leave"} element={<ReviewLeave />} />
+              <Route path={"review-leave/:id"} element={<LeaveDetails />} />
               <Route path={"review-suggestions"} element={<ReviewSuggestions />} />
           </Route>
       </Route>

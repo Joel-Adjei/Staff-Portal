@@ -1,32 +1,35 @@
 import React from 'react'
 import { useAuth } from '../../context/AuthContext'
-import { Edit, User } from 'lucide-react'
+import { Edit, Calendar, User, GraduationCap } from 'lucide-react'
+import Greetings from "../../components/dashboard/Greatings";
+import DashboardCard from "../../components/dashboard/DashboardCard";
+import DashCalender from "../../components/dashboard/Calendar";
 
 const AdminDashboard = () => {
     const {userRef} = useAuth()
   return (
-    <div className='w-full h-[100vh] mt-xl px-6'>
-        <div className={"w-full h-full grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 gap-6"}>
-            <div className={`bg-gradient-to-br from-orange-500 to-orange-700 dark:from-blue-900 dark:to-blue-950 md:col-span-3 md:row-span-1 rounded-lg
-                                 flex flex-col-reverse justify-center md:flex-row items-center md:justify-between p-6 md:py-4 md:px-14 shadow-md`}>
-                <div className='md:h-full flex flex-col gap-3 justify-between py-8 text-sm text-white dark:text-blue-200'>
-                    <div>
-                        <p>24th October, 2024</p>
-                    </div>
-                    <div>
-                        <h3 className='text-3xl font-semibold'>Welcome, {userRef.current.name}</h3>
-                        <p>lorem fsfjs sfospfspsf psfosjpfi spofsjpfjs</p>
-                    </div>
+    <div className='w-full h-[100dvh] mt-xl px-6'>
+        <div className={"w-full h-full grid grid-cols-1 grid-rows-4 md:grid-cols-3 md:grid-rows-3 gap-6"}>
+            <Greetings userRef={userRef}  />
+
+            <div className={"md:col-span-2 row-span-2 "}>
+                <div className={`grid grid-cols-1 md:grid-cols-2 gap-3`}>
+                    <DashboardCard Icon={User} title={'Total Staff'} value={'34'} />
+                    <DashboardCard Icon={Calendar} title={"leave Applications"} value={'12'} />
+                    <DashboardCard Icon={Calendar} className={'hidden md:block'} value={'2'} title={'Attendance'} />
+                    <DashboardCard Icon={Calendar} className={'hidden md:block'} value={'121'} title={'Suggestions'}  />
                 </div>
-                <div className={`relative size-[150px] flex items-center justify-center bg-slate-100 dark:to-blue-900 rounded-full`}>
-                    <User className={`size-[110px] text-orange-600 dark:text-blue-200`} />
-                    <button className='absolute top-1 right-1 '>
-                        <Edit className='size-[30px] text-orange-600 dark:blue-200 bg-white rounded p-1.7' />
-                    </button>
+
+                <div className={'p-3 bg-gray-50 dark:bg-blue-950 dark:text-blue-200 shadow-xl mt-7 rounded-lg border-2 border-orange-color dark:border-blue-300'}>
+                    Quote of the day
+                    <p className={'mt-2 text-sm text-gray-500'}>
+                        Eat Gob3 everyday it helps the body to last long when teaching
+                    </p>
                 </div>
             </div>
-            <div className={"bg-gray-50 md:col-span-2 md:row-span-2 rounded-lg shadow-xl"}></div>
-            <div className={"bg-gray-100 md:col-span-1 md:row-span-2 rounded-lg shadow-xl"}></div>
+            <div className={"hidden md:block md:col-span-1 md:row-span-2"}>
+                <DashCalender />
+            </div>
         </div>
     </div>
   )

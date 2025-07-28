@@ -5,3 +5,8 @@
 /*a{*/
 /*    background: linear-gradient(2deg , beige,black);*/
 /*}*/
+
+.days-container::-webkit-scrollbar{
+    display: none;
+}
+

@@ -100,11 +100,7 @@ const AddStaff =()=>{
                                     name={"email"}
                                     placeholder={"Email*"}
                                 />
-                                {/*<AppInput*/}
-                                {/*    id={"status"}*/}
-                                {/*    name={"status"}*/}
-                                {/*    placeholder={"Status*"}*/}
-                                {/*/>*/}
+
                                 <RadioGroup
                                     label="Status"
                                     name="status"

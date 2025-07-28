@@ -19,7 +19,7 @@ const Login =()=>{
     const [message, setMessage] = useState({ text: '', type: '' });
      const [endpoint , setEndpoint] = useState("/api/staff/login")
 
-    const {  loginStaff ,loginAdmin , roleRef , setRoleRef, } = useAuth();
+    const {  loginStaff ,loginAdmin , roleRef , setRoleRef, fetchProfile } = useAuth();
     const {fetchData ,response} = useFetch({method:"POST" , endpoint: endpoint ,})
     const {toasts, addToast, removeToast} = useToast()
     const { darkMode , onLoad , setLoading} = usePortal()
@@ -52,7 +52,8 @@ const Login =()=>{
             if(response.current.ok){
                 addToast("Login successful", 'success')
                 const data = await response.current.json()
-                 roleRef.current === "admin" ? loginAdmin(data) : loginStaff(data)
+                 roleRef.current === "admin" ? await loginAdmin(data) : await loginStaff(data)
+                await fetchProfile()
                 onLoad()
                 navigator("/portal", {replace: true})
             }else{

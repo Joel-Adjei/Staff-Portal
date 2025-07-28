@@ -26,7 +26,7 @@ const NavigationPanel=()=>{
     return(
         <>
             {/* Sidebar */}
-            <aside className={`hidden w-[250px] h-[100vh] pt-[60px] fixed bottom-0 left-0 bg-[#FBFBFB] dark:bg-blue-950 p-2 pl-0 shadow-xl ${showPanel} flex-col border-r-[2px] border-[#FF970B] rounded-r-3xl z-20`}>
+            <aside className={`hidden w-[210px] h-[100vh] pt-[60px] fixed bottom-0 left-0 bg-[#FBFBFB] dark:bg-blue-950 p-2 pl-0 shadow-2xl  ${showPanel} flex-col rounded-r-3xl z-20`}>
                 <nav className=" w-full h-full flex flex-col justify-between">
                     <ul>
                         <NavigationItem

@@ -22,7 +22,7 @@ const PortalLayout =()=>{
                     <div >
                         <ProfilePanel />
                         <NavigationPanel />
-                        <div className={`flex-1 ${ showPanel === "md:flex" && "md:pl-[255px]"} h-[100%] dark:bg-deep_blue_black pt-[70px] pb-4`}>
+                        <div className={`flex-1 ${ showPanel === "md:flex" && "md:pl-[215px]"} h-[100%] dark:bg-deep_blue_black pt-[70px] pb-4`}>
                             {loading ? <AppLoading /> : <Outlet/>}
                         </div>
                     </div>

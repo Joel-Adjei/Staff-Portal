@@ -14,7 +14,7 @@ const NavBar =()=>{
 
     return(
         <nav className={"w-full fixed flex items-center md:justify-between top-0 bg-gray-50 shadow-md z-30 dark:bg-blue-950"}>
-            <div className={"md:w-[255px] bg-gradient-to-r from-orange-500 to-orange-600 flex items-center gap-2 py-3.5 md:py-1.5 pl-5 rounded-r-md"}>
+            <div className={"md:w-[215px] bg-gradient-to-r from-orange-500 to-orange-600 flex items-center gap-2 py-3.5 md:py-1.5 pl-5 rounded-r-md"}>
                 <button onClick={()=> {
                     togglePanel()
                     togglePanelMobile()
