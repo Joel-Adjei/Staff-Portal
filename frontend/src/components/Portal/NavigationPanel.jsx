@@ -35,7 +35,7 @@ const NavigationPanel=()=>{
                             viewName="Home"
                             to={"/portal"}
                         />
-                        {roleRef.current === 'teaching' && (
+                        {roleRef.current === 'staff' && (
                             <>
                                 <NavigationItem
                                     icon={BookOpen}
@@ -51,7 +51,7 @@ const NavigationPanel=()=>{
                             </>
                         )}
 
-                        {(roleRef.current === 'teaching' || roleRef.current === 'non-teaching') && (
+                        {(roleRef.current === 'staff' || roleRef.current === 'non-teaching') && (
                             <>
                                 <NavigationItem
                                     icon={Lightbulb}

@@ -20,7 +20,7 @@ const Greetings =({userRef})=>{
             </div>
             <div className={`relative size-[150px] flex items-center justify-center bg-slate-100 dark:bg-blue-300 rounded-full`}>
                 <User className={`size-[110px] text-orange-600 dark:text-blue-950`} />
-                <button className='absolute top-1 right-1 shadow-lg '>
+                <button className='absolute top-1 right-1 shadow-lg z-0 '>
                     <Edit className='size-[30px] text-orange-600 dark:text-blue-950 dark:blue-200 bg-slate-100 dark:bg-blue-100 rounded p-1.7 z-0' />
                 </button>
             </div>

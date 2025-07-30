@@ -7,6 +7,7 @@ import FileInput from "../../components/basic/input/FileInput";
 import Header from "../../components/basic/Header";
 import AppInput from "../../components/basic/input/AppInput";
 import Button from "../../components/basic/button/Button";
+import FileUploader from "../../components/basic/input/FileUploader";
 
 const SubmitTeachingMaterial = () => {
     const { user } = useAuth();
@@ -41,7 +42,7 @@ const SubmitTeachingMaterial = () => {
         <div className="p-6 ">
             <Header title={"Submit Teaching Materials (PDF)"}  Icon={BookText}/>
 
-            <Formik
+            {/* <Formik
                 initialValues={{ title: '', description: '', file: null }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
@@ -92,7 +93,9 @@ const SubmitTeachingMaterial = () => {
                         </Button>
                     </Form>
                 )}
-            </Formik>
+            </Formik> */}
+
+            <FileUploader />
         </div>
     );
 };

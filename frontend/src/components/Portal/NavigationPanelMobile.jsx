@@ -51,7 +51,7 @@ const NavigationPanelMobile =()=> {
 
     return(
         <>
-            <div className={`fixed ${showPanelMobile} top-0 w-full h-[100dvh] bg-gray-900/50 z-0 md:hidden`}
+            <div className={`fixed ${showPanelMobile} top-0 w-full h-[100dvh] bg-gray-900/50 z-10 md:hidden`}
                  onClick={()=> togglePanelMobile()}
             >
             </div>

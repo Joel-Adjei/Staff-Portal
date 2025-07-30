@@ -5,7 +5,7 @@ import { usePortal } from '../context/PortalContext';
 
 const RootLayout = () => {
   const navigator = useNavigate()
-   const {   isLogin , fetchProfile , user } = useAuth()
+   const {   isLogin, roleRef, userRef , fetchProfile , user } = useAuth()
   const {loading , setLoading} = usePortal()
 
   useEffect(()=>{
@@ -14,8 +14,12 @@ const RootLayout = () => {
 
   useEffect(()=>{
       isLogin.current ? navigator("/portal") : navigator("/auth/login")
-      // navigator("/portal")
+
       user == null && fetchProfile()
+
+      if(roleRef.current == "staff" && userRef.current.classTaught == null){
+          navigator("/profile-setup", { replace : true});
+      }
   },[isLogin.current])
 
   return (

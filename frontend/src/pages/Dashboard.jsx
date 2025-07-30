@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import {usePortal} from "../context/PortalContext";
 import AppLoading from '../components/basic/loading/AppLoading';
 import AdminDashboard from './admin/AdminDashboard';
+import Greetings from "../components/dashboard/Greatings";
 
 
 const Dashboard = () => {
@@ -17,18 +18,7 @@ const Dashboard = () => {
           <AdminDashboard />
         ) :
   <div className="p-6">
-    <section className={"flex flex-col items-center py-3"}>
-      <h4 className={"mx-auto text-5xl font-bold text-orange-color mb-4"}>Welcome</h4>
-      <div
-          className={`h-[240px] w-[240px] mx-auto flex items-center justify-center rounded-full border-2 border-blue-50 dark:border-blue-300 `}>
-        <div className={`h-[220px] w-[220px] rounded-full bg-blue-50`}>
-
-        </div>
-      </div>
-
-      <h3 className={"mx-auto text-3xl font-semibold text-font-color dark:text-blue-200 mt-2"}>Mr. {userData && userRef.current.name}</h3>
-      <div className={"px-10 py-[2px] text-sm text-white rounded bg-orange-color mt-1"}>{userData && userRef.current.role}</div>
-    </section>
+      <Greetings userRef={userRef} />
 
     <div className="mt-4 pb-0 dark:bg-deep_blue_black rounded-lg border border-blue-200">
       <h4 className="text-lg font-medium text-blue-100 py-2 px-5 rounded-t-lg bg-blue-600 dark:bg-blue-950 dark:text-blue-200 mb-2">Usage
@@ -46,7 +36,7 @@ const Dashboard = () => {
               <li>Fill out the "Apply for Leave" form for any leave requests.</li>
             </>
         )}
-        {(roleRef.current === 'teaching' || roleRef.current === 'non-teaching') && (
+        {(roleRef.current === 'staff' || roleRef.current === 'non-teaching') && (
             <>
               <li>Use the "Suggestion Box" for anonymous feedback.</li>
             </>
@@ -63,6 +53,12 @@ const Dashboard = () => {
         )}
       </ul>
     </div>
+      <div className={'p-3 bg-gray-50 dark:bg-blue-950 dark:text-blue-200 shadow-xl mt-7 rounded-lg border-2 border-orange-color dark:border-blue-300'}>
+          Quote of the day
+          <p className={'mt-2 text-sm text-gray-500'}>
+              Eat Gob3 everyday it helps the body to last long when teaching
+          </p>
+      </div>
   </div>
       }
       </>

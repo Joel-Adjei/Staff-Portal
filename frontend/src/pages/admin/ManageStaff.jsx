@@ -14,7 +14,7 @@ const ManageStaff = () => {
     const [staffToDelete , setStaffToDelete] = useState(null)
     const {toasts, addToast, removeToast} = useToast()
     const { token , staff , fetchAllStaffs } = useAuth()
-    const { loading, setLoading } = usePortal()
+    const [ loading, setLoading ] = useState(false)
     const [displayConfirmDelete , setDisplayConfirmDelete] = useState(false)
     const navigator = useNavigate()
 
@@ -31,10 +31,10 @@ const ManageStaff = () => {
             await deleteStaff({token: token.current , payload: payload})
             if(deleteResponse.current.ok){
                 const data = await deleteResponse.current.json()
-                addToast("staff deleted successful" , "success" , 6000)
                 console.log(data)
-		fetchAllStaffs()
             }
+            fetchAllStaffs()
+            addToast("staff deleted successful" , "success" , 6000)
 
         }catch (e) {
             console.log(e)
@@ -130,6 +130,11 @@ const ManageStaff = () => {
             </>
         );
     };
+
+    if(loading)
+        return (
+            <diV>Loading</diV>
+        )
 
     return (
         <div className="p-4 min-h-screen ">

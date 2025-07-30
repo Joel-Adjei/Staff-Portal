@@ -55,13 +55,12 @@ const AddStaff =()=>{
             const data = await addStaffResponse.current.json()
             if(addStaffResponse.current.ok){
                 console.log(data)
-                addToast("staff added successful" , "success" , 6000)
                 navigator(-1)
             }else {
                 addToast(data.message, "error" , 6000)
             }
-            fetchAllStaffs()
-
+            addToast("staff added successful" , "success" , 6000)
+            fetchAllStaffs();
         }catch (e) {
             console.log(e)
             addToast(e.message , "error" , 6000)

@@ -16,7 +16,7 @@ const UpdateProfile =() => {
     const navigator = useNavigate()
     const {fetchData ,response, loading} = useFetch({method:"PUT" , endpoint: "/users/staff/profile" ,})
     const {toasts, addToast, removeToast} = useToast()
-    const {user, token } = useAuth()
+    const {user, userRef , token } = useAuth()
 
     const initialValues = {
         name: "",
@@ -42,14 +42,14 @@ const UpdateProfile =() => {
     const handleSubmit = async (values, { setSubmitting , resetForm })=>{
         setSubmitting(true)
         const payload = {
-            "name": `${values.name ? values.name : user.name}`,
-            "email": `${values.email ? values.email : user.email}`,
-            "password": `${values.password ? values.password : user.password}`,
-            "role" :`${user.role ? values.role : user.role}`,
-            "classTaught":`${values.classTaught ? values.classTaught : user.classTaught}`,
-            "subject": `${values.subject ? values.subject : user.subject}`,
-            "contact":`${values.contact ? values.contact : user.contact}`,
-            "address":`${values.address ? values.address : user.address}`
+            "name": `${values.name !== "" ? values.name : userRef.current.name}`,
+            "email": `${values.email !== "" ? values.email : user.email}`,
+            "password": `${values.password !== "" ? values.password : user.password}`,
+            "role" :`${user.role}`,
+            "classTaught":`${values.classTaught !== "" ? values.classTaught : user.classTaught}`,
+            "subject": `${values.subject !== "" ? values.subject : user.subject}`,
+            "contact":`${values.contact !== "" ? values.contact : user.contact}`,
+            "address":`${values.address !== "" ? values.address : user.address}`
         }
         try {
              await fetchData({payload: payload, token: token.current})
@@ -89,6 +89,7 @@ const UpdateProfile =() => {
                                 id={"name"}
                                 name={"name"}
                                 placeholder={user.name}
+                                value={userRef.current.email}
                             />
 
                             <AppInput
