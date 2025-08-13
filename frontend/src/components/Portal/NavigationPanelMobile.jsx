@@ -23,14 +23,14 @@ const NavigationItem = ({ icon: Icon, label, to , active , viewName }) => {
                     togglePanelMobile()
                     setCurrentPage(viewName)
                 }}
-                className={`flex items-center text-font-color w-full p-2 rounded-r-full text-left transition-all duration-200 ease-in-out
+                className={`flex items-center text-font-color dark:text-blue-200 w-full p-2 rounded-r-full text-left transition-all duration-200 ease-in-out
             ${active ? 'bg-orange-color': ''}
             hover:bg-blue-300/20
             ${currentPage == viewName && "bg-gradient-to-r from-orange-500 to-orange-600 hover:bg-orange-color text-white dark:text-white "}
             `}
             >
                 <Icon className={`mr-3 h-5 w-5 ${currentPage == viewName ? "text-white " : "text-orange-color"}`} />
-                <span className="font-medium dark:text-blue-200 text-[15px]">{label}</span>
+                <span className="font-medium text-[15px]">{label}</span>
             </button>
         </NavLink>
     </li>
@@ -51,12 +51,12 @@ const NavigationPanelMobile =()=> {
 
     return(
         <>
-            <div className={`fixed ${showPanelMobile} top-0 w-full h-[100dvh] bg-gray-900/50 z-10 md:hidden`}
+            <div className={`fixed ${showPanelMobile} top-0 w-full h-[100vh] bg-gray-900/50 z-10 md:hidden`}
                  onClick={()=> togglePanelMobile()}
             >
             </div>
             {/* Sidebar */}
-            <aside className={`w-[230px] h-[100dvh] pt-[60px] fixed bottom-0 dark:bg-blue-950 left-0 bg-[#FBFBFB] p-2 pl-0 shadow-2xl ${showPanelMobile} flex-col rounded-r-3xl z-20 md:hidden`}>
+            <aside className={`w-[230px] h-[100vh] pt-[60px] fixed bottom-0 dark:bg-blue-950 left-0 bg-[#FBFBFB] p-2 pl-0 shadow-2xl ${showPanelMobile} flex-col rounded-r-3xl z-20 md:hidden`}>
                 <nav className=" w-full h-full flex flex-col justify-between">
                     <ul>
                         <NavigationItem
@@ -65,7 +65,7 @@ const NavigationPanelMobile =()=> {
                             viewName="Home"
                             to={"/portal"}
                         />
-                        {roleRef.current === 'teaching' && (
+                        {roleRef.current === 'staff' && (
                             <>
                                 <NavigationItem
                                     icon={BookOpen}
@@ -81,7 +81,7 @@ const NavigationPanelMobile =()=> {
                             </>
                         )}
 
-                        {(roleRef.current === 'teaching' || roleRef.current === 'non-teaching') && (
+                        {(roleRef.current === 'staff' || roleRef.current === 'non-teaching') && (
                             <>
                                 <NavigationItem
                                     icon={Lightbulb}
@@ -105,7 +105,6 @@ const NavigationPanelMobile =()=> {
                                     viewName="manage-staff"
                                     to={"/portal/manageStaff"}
                                 />
-                                <NavigationItem icon={CheckSquare} label="Grant Privileges" viewName="grant-privileges" />
                                 <NavigationItem icon={ClipboardList} label="Review Materials" viewName="review-materials" />
                                 <NavigationItem
                                     icon={Megaphone}
@@ -133,7 +132,7 @@ const NavigationPanelMobile =()=> {
                         <div className="bottom-0 mt-auto pt-6 border-t border-gray-700"> {/* Pushes logout to bottom */}
                             <button
                                 onClick={logout}
-                                className="flex items-center w-full p-3 rounded-lg text-left text-gray-200 hover:bg-blue-300 hover:text-white transition-all duration-200 ease-in-out"
+                                className="flex items-center w-full p-3 rounded-lg text-left text-gray-200 hover:bg-blue-300/30 hover:text-white transition-all duration-200 ease-in-out"
                             >
                                 {/*<LogIn className="mr-3 h-5 w-5" />*/}
                                 <LogOut className="mr-3 h-5 w-5 text-blue-950 dark:text-blue-200 " />

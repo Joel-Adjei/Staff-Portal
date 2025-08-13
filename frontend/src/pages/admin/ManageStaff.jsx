@@ -9,12 +9,13 @@ import useToast from "../../hooks/useToast";
 import {ToastContainer} from "../../Toast";
 import {usePortal} from "../../context/PortalContext";
 import AppModal from "../../components/basic/AppModal";
+import PortalLoading from '../../components/basic/loading/PortalLoading';
 
 const ManageStaff = () => {
     const [staffToDelete , setStaffToDelete] = useState(null)
     const {toasts, addToast, removeToast} = useToast()
     const { token , staff , fetchAllStaffs } = useAuth()
-    const [ loading, setLoading ] = useState(false)
+    const [ loading, setLoading ] = useState(true)
     const [displayConfirmDelete , setDisplayConfirmDelete] = useState(false)
     const navigator = useNavigate()
 
@@ -47,6 +48,7 @@ const ManageStaff = () => {
     // Initialize users
     useEffect(() => {
         staff.length === 0 && fetchAllStaffs()
+        setLoading(false)
     }, []);
 
 
@@ -133,7 +135,9 @@ const ManageStaff = () => {
 
     if(loading)
         return (
-            <diV>Loading</diV>
+            <diV>
+                <PortalLoading />
+            </diV>
         )
 
     return (

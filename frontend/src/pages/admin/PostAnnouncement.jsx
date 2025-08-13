@@ -8,13 +8,14 @@ import useToast from "../../hooks/useToast";
 import Header from "../../components/basic/Header";
 import Button from "../../components/basic/button/Button";
 import AppInput from "../../components/basic/input/AppInput";
+import useFetch from "../../hooks/useFetch";
 
 const PostAnnouncement = () => {
     const [message, setMessage] = useState({ text: '', type: '' });
-    const { user } = useAuth();
+    const { token } = useAuth();
+    const {fetchData , response} = useFetch({method: "POST" , endpoint: "/users/admin/announcement"})
     const {toasts, addToast, removeToast} = useToast()
-    const userName = user?.fullName || user?.email.split('@')[0] || 'Admin'; // Assuming admin
-
+   
     const validationSchema = Yup.object().shape({
         title: Yup.string().required('Title is required').min(5, 'Title must be at least 5 characters'),
         content: Yup.string().required('Content is required').min(20, 'Content must be at least 20 characters'),
@@ -24,18 +25,27 @@ const PostAnnouncement = () => {
         setMessage({ text: '', type: '' });
         try {
             const payload = {
-                title: values.title,
-                content: values.content,
-                postedBy: userName,
+                "announcementTitle": values.title,
+                "announcement": values.content,
             };
 
+            await fetchData({payload , token : token.current})
+
+            if(response.current.ok){
+                const data = await response.current.json()
+                console.log(data)
+                addToast(data.message , "success")
+                resetForm()
+            }
             console.log(values)
+
         } catch (error) {
             console.error("Post announcement error:", error);
             setMessage({
                 text: error.response?.data?.message || 'Failed to post announcement. Please try again.',
                 type: 'error',
             });
+            addToast("Error" , "error")
         } finally {
             setSubmitting(false);
         }

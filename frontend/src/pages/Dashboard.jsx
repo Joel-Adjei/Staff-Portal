@@ -11,6 +11,7 @@ const Dashboard = () => {
   const { user: userData , userRef, roleRef , fetchProfile } = useAuth()
   const navigator = useNavigate()
 
+  const { setCurrentPage } = usePortal
 
   return (
       <>

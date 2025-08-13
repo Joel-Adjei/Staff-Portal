@@ -100,7 +100,7 @@ const Login =()=>{
 
         <div className={`dark:bg-[#001741] bg-white p-6 pb-4 rounded-lg shadow-2xl w-full max-w-md z-30 `}>
                 <div className="flex flex-col items-center mb-6">
-                    <h2 className={`text-4xl leading-none font-bold text-center text-blue-800 mb-3 dark:text-blue-200 text-blue-800`}>
+                    <h2 className={`text-4xl leading-none font-bold text-center text-blue-800 mb-3 dark:text-blue-200 `}>
                         Login
                     </h2>
                     <div className="h-[2px] w-[70px] rounded-full bg-orange-300"></div>
@@ -174,7 +174,7 @@ const Login =()=>{
                             displayPassword === "password" ? <EyeOff /> : <Eye/>
                         }
                     </button>
-                    <p className={`absolute right-0 bottom-[-30px] text-sm text-blue-600 cursor-pointer dark:text-blue-200 text-blue-600 hover:underline`}>
+                    <p className={`absolute right-0 bottom-[-30px] text-sm text-blue-600 cursor-pointer dark:text-blue-200 hover:underline`}>
                         forgot your password?
                     </p>
                 </div>

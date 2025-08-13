@@ -8,10 +8,14 @@ import Header from "../../components/basic/Header";
 import Button from "../../components/basic/button/Button";
 import {ToastContainer} from "../../Toast";
 import useToast from "../../hooks/useToast";
+import useFetch from '../../hooks/useFetch';
+import { useAuth } from '../../context/AuthContext';
 
 const SuggestionBox = () => {
     const [message, setMessage] = useState({ text: '', type: '' });
+    const {fetchData , response} = useFetch({method: "POST", endpoint: "/users/staff/suggestions"})
     const {toasts, addToast, removeToast} = useToast()
+    const {token} = useAuth()
 
 
     const validationSchema = Yup.object().shape({
@@ -19,15 +23,21 @@ const SuggestionBox = () => {
     });
 
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-
         setMessage({ text: '', type: '' });
+
+        const payload = {
+            "suggestion": values.suggestion
+        }
+
         try {
-            // const response = await axios.post(`${API_BASE_URL}/staff/suggestions`, { message: values.suggestion });
-            //
-            // if (response.status === 201) {
-            //     setMessage({ text: 'Suggestion submitted anonymously!', type: 'success' });
-            //     resetForm();
-            // }
+            await fetchData({payload , token: token.current})
+
+            if (response.current.ok) {
+                const data = await response.current.json()
+                console.log(data)
+                addToast('Suggestion submitted anonymously!','success');
+                resetForm();
+            }
             console.log(values)
         } catch (error) {
             console.error("Submit suggestion error:", error);
@@ -35,6 +45,8 @@ const SuggestionBox = () => {
                 text:  'Failed to submit suggestion. Please try again.',
                 type: 'error',
             });
+            
+            addToast('Eror!','error');
         } finally {
             setSubmitting(false);
             resetForm()

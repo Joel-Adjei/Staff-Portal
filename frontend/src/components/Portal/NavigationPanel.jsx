@@ -75,7 +75,6 @@ const NavigationPanel=()=>{
                                     viewName="manage-staff"
                                     to={"/portal/manageStaff"}
                                 />
-                                <NavigationItem icon={CheckSquare} label="Grant Privileges" viewName="grant-privileges" />
                                 <NavigationItem icon={ClipboardList} label="Review Materials" viewName="review-materials" />
                                 <NavigationItem
                                     icon={Megaphone}

@@ -17,7 +17,7 @@ const ModalSection =({children})=>{
                 <X className={"text-gray-700 hover:text-gray-200 p-1 size-[35px] rounded-lg bg-gray-200 hover:bg-red-500 cursor-pointer"} />
             </button>
 
-            <section className={"w-[500px] bg-white-color rounded-lg dark:bg-deep_blue_black p-6"}>
+            <section className={"relative w-[500px] bg-white-color shadow-xl rounded-lg dark:bg-deep_blue_black p-6"}>
                 {children}
             </section>
         </div>

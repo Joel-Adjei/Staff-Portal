@@ -4,31 +4,42 @@ import {useAuth} from "../../context/AuthContext";
 import Button from "../../components/basic/button/Button";
 import Header from "../../components/basic/Header";
 import {MessageSquare} from "lucide-react";
+import useToast from '../../hooks/useToast';
+import { ToastContainer } from '../../Toast';
 
 const ReviewSuggestions = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [message, setMessage] = useState('');
-    const {fetchData , response} = useFetch({endpoint : "/users/admin/leaveApplications"})
+    const {fetchData , response} = useFetch({endpoint : "/users/admin/viewSuggestions"})
     const {token} = useAuth()
+    // const {toasts, addToast, removeToast} = useToast
 
 
-    // const fetchSuggestions = async () => {
-    //     setLoading(true);
-    //     setError(null);
-    //     try {
+    const fetchSuggestions = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            await fetchData({token: token.current})
+            if (response.current.ok) {
+                const data = await response.current.json()
+                const tempArr = [data]
+                console.log(tempArr)
+                setSuggestions(data)
+                // addToast('Suggestion submitted anonymously!','success');
+            }
+    
+        } catch (err) {
+            setError(`Failed to fetch suggestions: ${err.response?.data?.message || err.message || 'Server error'}`);
+        } finally {
+            setLoading(false);
+        }
+    };
     //
-    //     } catch (err) {
-    //         setError(`Failed to fetch suggestions: ${err.response?.data?.message || err.message || 'Server error'}`);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
-    //
-    // useEffect(() => {
-    //     fetchSuggestions();
-    // }, []);
+    useEffect(() => {
+        fetchSuggestions();
+    }, []);
 
     const updateSuggestionStatus = async (id, newStatus) => {
         setMessage('');
@@ -59,6 +70,8 @@ const ReviewSuggestions = () => {
 
     return (
         <div className=" p-8 ">
+            {/* <ToastContainer toasts={toasts} removeToast={removeToast} /> */}
+
             <Header title={"Review Suggestions"} Icon={MessageSquare} />
             <p className="text-gray-600 mb-6">Review and manage suggestions submitted by staff members.</p>
 
@@ -68,10 +81,11 @@ const ReviewSuggestions = () => {
                 {suggestions.length === 0 ? (
                     <p className="text-gray-500">No new suggestions.</p>
                 ) : (
-                    suggestions.map((sugg) => (
-                        <div key={sugg.id} className="p-5 border border-gray-200 rounded-md bg-white shadow-sm">
+                    suggestions.length > 0 &&
+                    suggestions.map((sugg , index) => (
+                        <div key={index} className="p-5 border border-gray-200 rounded-md bg-white shadow-sm">
                             <div className="flex justify-between items-start mb-2">
-                                <h4 className="text-lg font-semibold text-gray-800">{sugg.subject} <span className="font-normal text-sm text-gray-500">- by {sugg.staff}</span></h4>
+                                <h4 className="text-lg font-semibold text-gray-800">{sugg.suggestion_box} <span className="font-normal text-sm text-gray-500">- by {sugg.staff}</span></h4>
                                 <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                                     sugg.status === 'New' ? 'bg-blue-100 text-blue-800' :
                                         'bg-green-100 text-green-800'

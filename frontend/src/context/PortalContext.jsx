@@ -10,9 +10,9 @@ export const PortalContextProvider =({children})=>{
     const [showPanelMobile , setShowPanelMobile] = useState("hidden")
     const [currentPage , setCurrentPage] = useState("Home")
 
-    useEffect(() => {
-        setCurrentPage("Home")
-    }, []);
+    // useEffect(() => {
+    //     setCurrentPage("Home")
+    // }, []);
 
     function onLoad(){
         setLoading(true)
