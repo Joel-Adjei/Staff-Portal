@@ -8,6 +8,7 @@ import Header from "../../components/basic/Header";
 import AppInput from "../../components/basic/input/AppInput";
 import Button from "../../components/basic/button/Button";
 import FileUploader from "../../components/basic/input/FileUploader";
+import TeachingMaterialsUpload from '../../components/teaching-materials-upload';
 
 const SubmitTeachingMaterial = () => {
     const { user } = useAuth();
@@ -42,60 +43,7 @@ const SubmitTeachingMaterial = () => {
         <div className="p-6 ">
             <Header title={"Submit Teaching Materials (PDF)"}  Icon={BookText}/>
 
-            {/* <Formik
-                initialValues={{ title: '', description: '', file: null }}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-            >
-                {({ isSubmitting }) => (
-                    <Form className="space-y-4">
-                        <div>
-                            <label htmlFor="title" className="block text-gray-700 text-sm font-bold mb-2">
-                                Material Title
-                            </label>
-                            <AppInput
-                                type="text"
-                                id="title"
-                                name="title"
-                                className="shadow border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Lesson Notes - Chapter 1"
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">
-                                Description (Optional)
-                            </label>
-                            <AppInput
-                                as="textarea"
-                                id="description"
-                                name="description"
-                                rows="4"
-                                className="shadow border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Brief description of the material content."
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="file" className="block text-gray-700 text-sm font-bold mb-2">
-                                Upload PDF File (Max 5MB)
-                            </label>
-                            <Field name="file" component={FileInput} />
-                            <ErrorMessage name="file" component="div" className="text-red-500 text-xs mt-1" />
-                        </div>
-
-                        <Button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            {isSubmitting ? 'Submitting...' : 'Submit Material'}
-                        </Button>
-                    </Form>
-                )}
-            </Formik> */}
-
-            <FileUploader />
+            <TeachingMaterialsUpload />
         </div>
     );
 };

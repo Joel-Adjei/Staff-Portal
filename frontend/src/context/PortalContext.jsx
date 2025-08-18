@@ -3,11 +3,13 @@ import React, { useState, useEffect , createContext, useContext } from "react";
 const PortalContext = createContext();
 
 export const PortalContextProvider =({children})=>{
-    const [isOpen, setIsOpen] = useState(false);// for profile panel
+    const [openProfile, setOpenProfile] = useState(false);// for profile panel
+    const [openNotifi, setOpenNotifi] = useState(false);// for Notofication panel
     const [darkMode, setDarkMode] = useState(false)
     const [loading, setLoading] = useState(true);
     const [showPanel , setShowPanel] = useState("md:flex")
     const [showPanelMobile , setShowPanelMobile] = useState("hidden")
+    const [showNotiMobile , setNotiMobile] = useState("hidden")
     const [currentPage , setCurrentPage] = useState("Home")
 
     // useEffect(() => {
@@ -37,12 +39,17 @@ export const PortalContextProvider =({children})=>{
     }
 
     const toggleProfilePanel = () => {
-        setIsOpen(!isOpen);
+        setOpenProfile(!openProfile);
+    };
+    const toggleNotfiPanel = () => {
+        setOpenNotifi(!openNotifi);
     };
 
+    //DestopPanel
     function togglePanel() {
         setShowPanel(prevState => prevState === "md:flex" ? "md:hidden" : "md:flex")
     }
+
     function togglePanelMobile() {
         setShowPanelMobile(prevState => prevState === "flex" ? "hidden" : "flex")
     }
@@ -62,9 +69,11 @@ export const PortalContextProvider =({children})=>{
             toggleDarkMode,
             currentPage,
             setCurrentPage,
-            isOpen,
-            setIsOpen,
+            openProfile,
+            setOpenProfile,
             toggleProfilePanel,
+            openNotifi,
+            toggleNotfiPanel,
         }}>
             {children}
         </PortalContext.Provider>

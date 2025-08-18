@@ -16,7 +16,7 @@ const NavigationItem = ({ icon: Icon, label, to , active , onClick , viewName })
                 }, 2000)
                 setCurrentPage(viewName)
             }}
-            className={`flex items-center text-font-color w-full p-2.5 rounded-r-full text-left transition-all duration-200 ease-in-out
+            className={`flex items-center text-font-color w-full p-2.5 pl-4 rounded-r-full text-left transition-all duration-200 ease-in-out
             ${active ? 'bg-orange-color': ''}
             hover:bg-blue-300/20
             dark:text-blue-200

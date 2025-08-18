@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {useAuth} from "../../context/AuthContext";
 import {
     Home, BookOpen, GraduationCap, Calendar, CheckSquare,
-    Lightbulb, Bell, User, ClipboardList, FileText,
+    Lightbulb, User, ClipboardList, FileText,
     Megaphone, MessageSquare, LogOut
 } from "lucide-react";
 import {usePortal} from "../../context/PortalContext";
@@ -23,7 +23,7 @@ const NavigationItem = ({ icon: Icon, label, to , active , viewName }) => {
                     togglePanelMobile()
                     setCurrentPage(viewName)
                 }}
-                className={`flex items-center text-font-color dark:text-blue-200 w-full p-2 rounded-r-full text-left transition-all duration-200 ease-in-out
+                className={`flex items-center text-font-color dark:text-blue-200 w-full p-2 pl-4 rounded-r-full text-left transition-all duration-200 ease-in-out
             ${active ? 'bg-orange-color': ''}
             hover:bg-blue-300/20
             ${currentPage == viewName && "bg-gradient-to-r from-orange-500 to-orange-600 hover:bg-orange-color text-white dark:text-white "}
@@ -56,7 +56,7 @@ const NavigationPanelMobile =()=> {
             >
             </div>
             {/* Sidebar */}
-            <aside className={`w-[230px] h-[100vh] pt-[60px] fixed bottom-0 dark:bg-blue-950 left-0 bg-[#FBFBFB] p-2 pl-0 shadow-2xl ${showPanelMobile} flex-col rounded-r-3xl z-20 md:hidden`}>
+            <aside className={`w-[230px] h-[100vh] pt-[70px] fixed bottom-0 dark:bg-blue-950 left-0 bg-[#FBFBFB] px-2 pl-0 shadow-2xl ${showPanelMobile} flex-col rounded-r-3xl z-20 md:hidden`}>
                 <nav className=" w-full h-full flex flex-col justify-between">
                     <ul>
                         <NavigationItem
@@ -132,7 +132,7 @@ const NavigationPanelMobile =()=> {
                         <div className="bottom-0 mt-auto pt-6 border-t border-gray-700"> {/* Pushes logout to bottom */}
                             <button
                                 onClick={logout}
-                                className="flex items-center w-full p-3 rounded-lg text-left text-gray-200 hover:bg-blue-300/30 hover:text-white transition-all duration-200 ease-in-out"
+                                className="flex items-center w-full p-3 pl-4 rounded-lg text-left text-gray-200 hover:bg-blue-300/30 hover:text-white transition-all duration-200 ease-in-out"
                             >
                                 {/*<LogIn className="mr-3 h-5 w-5" />*/}
                                 <LogOut className="mr-3 h-5 w-5 text-blue-950 dark:text-blue-200 " />

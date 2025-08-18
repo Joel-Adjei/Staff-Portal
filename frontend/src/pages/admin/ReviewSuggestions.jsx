@@ -3,9 +3,10 @@ import useFetch from "../../hooks/useFetch";
 import {useAuth} from "../../context/AuthContext";
 import Button from "../../components/basic/button/Button";
 import Header from "../../components/basic/Header";
-import {MessageSquare} from "lucide-react";
+import {MessageSquare , Trash2Icon} from "lucide-react";
 import useToast from '../../hooks/useToast';
 import { ToastContainer } from '../../Toast';
+import usePageTile from "../../hooks/usePageTitle";
 
 const ReviewSuggestions = () => {
     const [suggestions, setSuggestions] = useState([]);
@@ -14,6 +15,7 @@ const ReviewSuggestions = () => {
     const [message, setMessage] = useState('');
     const {fetchData , response} = useFetch({endpoint : "/users/admin/viewSuggestions"})
     const {token} = useAuth()
+    usePageTile("Suggestions")
     // const {toasts, addToast, removeToast} = useToast
 
 
@@ -26,7 +28,7 @@ const ReviewSuggestions = () => {
                 const data = await response.current.json()
                 const tempArr = [data]
                 console.log(tempArr)
-                setSuggestions(data)
+                setSuggestions(tempArr)
                 // addToast('Suggestion submitted anonymously!','success');
             }
     
@@ -41,17 +43,6 @@ const ReviewSuggestions = () => {
         fetchSuggestions();
     }, []);
 
-    const updateSuggestionStatus = async (id, newStatus) => {
-        setMessage('');
-        try {
-            await api.put(`/admin/suggestions/${id}/status`, { status: newStatus });
-            setMessage(`Suggestion status updated to ${newStatus}!`);
-            fetchSuggestions(); // Refresh the list
-        } catch (err) {
-            setMessage(`Status update failed: ${err.response?.data?.message || err.message || 'Server error'}`);
-        }
-    };
-
     const handleDeleteSuggestion = async (id) => {
         if (window.confirm('Are you sure you want to delete this suggestion?')) {
             setMessage('');
@@ -65,8 +56,14 @@ const ReviewSuggestions = () => {
         }
     };
 
-    // if (loading && !suggestions.length) return <p className="text-center text-gray-700">Loading suggestions...</p>;
-    // if (error) return <p className="text-center text-red-600">{error}</p>;
+    const shortenText = (text) =>{
+        let mid = 50
+        if(text.length > mid){
+            return text.substring(0, mid) + "..."
+        }
+        return text
+    }
+
 
     return (
         <div className=" p-8 ">
@@ -80,29 +77,22 @@ const ReviewSuggestions = () => {
             <div className="space-y-4">
                 {suggestions.length === 0 ? (
                     <p className="text-gray-500">No new suggestions.</p>
-                ) : (
-                    suggestions.length > 0 &&
-                    suggestions.map((sugg , index) => (
-                        <div key={index} className="p-5 border border-gray-200 rounded-md bg-white shadow-sm">
+                ) : <div className={"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"}>
+                    {suggestions.map((sugg, index) => (
+                        <div key={index} className="flex justify-between p-5 border border-gray-200 rounded-md bg-white dark:bg-blue-900 shadow-sm">
                             <div className="flex justify-between items-start mb-2">
-                                <h4 className="text-lg font-semibold text-gray-800">{sugg.suggestion_box} <span className="font-normal text-sm text-gray-500">- by {sugg.staff}</span></h4>
-                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                                    sugg.status === 'New' ? 'bg-blue-100 text-blue-800' :
-                                        'bg-green-100 text-green-800'
-                                }`}>
-                                    {sugg.status}
-                                </span>
+                                <h4 className="text-lg font-semibold text-gray-800 dark:text-blue-300">{shortenText(sugg.suggestion_box)} </h4>
                             </div>
-                            <p className="text-gray-700 mb-4">{sugg.content}</p>
                             <div className="flex space-x-2">
-                                {sugg.status === 'New' && (
-                                    <Button onClick={() => updateSuggestionStatus(sugg.id, 'Reviewed')} className="bg-indigo-600 hover:bg-indigo-700 text-sm py-1 px-3">Mark as Reviewed</Button>
-                                )}
-                                <Button onClick={() => handleDeleteSuggestion(sugg.id)} className="bg-red-500 hover:bg-red-600 text-sm py-1 px-3">Delete</Button>
+                                <button onClick={() => handleDeleteSuggestion(sugg.id)}
+                                        className=" h-fit bg-red-600 hover:bg-red-700 text-sm rounded-md text-white py-1 px-3">
+                                    <Trash2Icon />
+                                </button>
                             </div>
                         </div>
-                    ))
-                )}
+                    ))}
+                </div>
+                }
             </div>
         </div>
     );

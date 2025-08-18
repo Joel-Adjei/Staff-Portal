@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {PanelLeft, X , Bell, Moon, Sun} from "lucide-react";
+import React from 'react';
+import {PanelLeft, UserCircle, Bell, Moon, Sun} from "lucide-react";
 import {usePortal} from "../../context/PortalContext";
-import {useAuth} from "../../context/AuthContext";
 
 const NavBar =()=>{
-    const { currentPage ,showPanel, toggleDarkMode, handleThemeChange, toggleProfilePanel ,togglePanel ,togglePanelMobile} = usePortal()
-    const {user} = useAuth()
+    const { currentPage , toggleDarkMode, handleThemeChange,toggleNotfiPanel,
+        toggleProfilePanel ,togglePanel ,togglePanelMobile} = usePortal()
 
 
     function formatString(title) {
@@ -22,7 +21,7 @@ const NavBar =()=>{
                     <PanelLeft className={"size-[33px] text-white p-1 rounded bg-white/20 mr-3 "}/>
                 </button>
 
-                <div className={"hidden bg-white md:block size-[40px] bg-gray-500 rounded-full"}></div>
+                <div className={"hidden md:block size-[40px] bg-gray-500 rounded-full"}></div>
                 <p className={"hidden font-bold text-white md:block"}>KHMP</p>
             </div>
 
@@ -30,16 +29,27 @@ const NavBar =()=>{
                 <div>
                     <h3 className={"hidden text-xl text-font-color font-medium dark:text-blue-200 md:block"}>{formatString(currentPage)}</h3>
 
-                    <div className={" md:hidden size-[40px] bg-gray-500 rounded-full"}></div>
+                    <div className={" md:hidden size-[40px] bg-gray-500 rounded-full"}>
+
+                    </div>
                 </div>
 
                 <div className={" flex items-center gap-1 md:gap-2"}>
-                    <Bell  className={"size-[30px] text-[#FF970B] p-1 rounded-full bg-gray-200 dark:bg-blue-200 dark:text-blue-950 cursor-pointer "} />
+                    <button
+                        onClick={()=> toggleNotfiPanel()}
+                    >
+                        <div className="size-[35px] flex items-center justify-center rounded-full cursor-pointer bg-gray-200 dark:bg-blue-200 ">
+                            <Bell  className={"size-8 text-[#FF970B] p-1 dark:text-blue-950  "} />
+                        </div>
+                    </button>
+                    
 
                     <button className={" flex items-center gap-2 hover:bg-blue-300/20 px-2 py-1 cursor-pointer rounded"}
                             onClick={()=> toggleProfilePanel()}
                     >
-                        <div className={"size-[35px] bg-gray-500 rounded-full"}></div>
+                        <div className={"size-[35px] flex items-center justify-center bg-gray-200 dark:bg-blue-200 rounded-full"}>
+                            <UserCircle className={"size-7 text-orange-500 dark:text-blue-950"} />
+                        </div>
                     </button>
                 </div>
             </div>

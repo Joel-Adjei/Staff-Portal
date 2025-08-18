@@ -19,6 +19,8 @@ import ReviewLeave from "./pages/admin/ReviewLeave";
 import ReviewSuggestions from "./pages/admin/ReviewSuggestions";
 import LeaveDetails from "./components/others/LeaveDetails";
 import StaffProfileSetup from "./components/ProfileSetup/StaffProfileSetup";
+import StaffDetails from "./components/others/StaffDetails";
+import AnnouncementDetail from './components/others/AnnounceDetails'
 
 function App() {
 
@@ -41,8 +43,10 @@ function App() {
               <Route path={"submit-teaching-materials"} element={<SubmitTeachingMaterial />} />
               <Route path={"submit-performance"} element={<SubmitPerformance />} />
               <Route path={"post-announcement"} element={<PostAnnouncement />} />
+              <Route path={"announcement/:id"} element={<AnnouncementDetail />} />
               <Route path={"review-leave"} element={<ReviewLeave />} />
               <Route path={"review-leave/:id"} element={<LeaveDetails />} />
+              <Route path={"manageStaff/:id"} element={<StaffDetails />} />
               <Route path={"review-suggestions"} element={<ReviewSuggestions />} />
           </Route>
 

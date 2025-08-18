@@ -13,6 +13,7 @@ import useFetch from "../../hooks/useFetch";
 import {useAuth} from "../../context/AuthContext";
 import {usePortal} from "../../context/PortalContext";
 import RadioGroup from "../../components/basic/input/AppPicker";
+import usePageTile from "../../hooks/usePageTitle";
 
 const roles = [
     { value: 'admin', label: 'Admin' },
@@ -24,6 +25,7 @@ const AddStaff =()=>{
     const navigator = useNavigate()
     const {setLoading} = usePortal()
     const {token , fetchAllStaffs} = useAuth()
+    usePageTile("Manage Staff - Add Staff")
     const {toasts, addToast, removeToast} = useToast()
     const { fetchData : addStaff  , response: addStaffResponse} = useFetch({method: "POST",endpoint: "/users/admin/addStaff"})
 

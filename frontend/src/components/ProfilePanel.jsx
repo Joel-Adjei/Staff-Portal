@@ -7,16 +7,16 @@ import {useAuth} from "../context/AuthContext";
 const ProfilePanel = () => {
     const navigator = useNavigate()
     const panelRef = useRef(null);
-    const {isOpen,  toggleProfilePanel , toggleDarkMode , handleThemeChange} = usePortal()
-    const {userRef}  = useAuth()
+    const {openProfile,  toggleProfilePanel , toggleDarkMode , handleThemeChange} = usePortal()
+    const {userRef , roleRef}  = useAuth()
 
 
     return (
                     <div className="relative">
 
-                        {isOpen &&  <div onClick={() => toggleProfilePanel()} className={`fixed z-30 top-0 left-0 bg-gray-800/70 h-[100vh] w-full`}></div>}
+                        {openProfile &&  <div onClick={() => toggleProfilePanel()} className={`fixed z-30 top-0 left-0 bg-gray-800/70 h-[100vh] w-full`}></div>}
 
-                        {isOpen && <button
+                        {openProfile && <button
                             onClick={() => toggleProfilePanel()}
                         >
                             <X className={`fixed w-[30px] h-[30px] text-blue-950 z-50 top-2 right-3 bg-gray-200 p-1 rounded-full`}/>
@@ -28,7 +28,7 @@ const ProfilePanel = () => {
                             className={`fixed z-40 h-[100dvh] top-0 right-0 w-80 bg-white-color p-2 dark:bg-deep_blue_black backdrop-blur-lg rounded-l-2xl shadow-2xl border-l-2 border-orange-color overflow-hidden transition-all duration-300 transform
                              
                              ${
-                                isOpen
+                                openProfile
                                     ? 'opacity-100 translate-x-0'
                                     : 'opacity-0 translate-x-full pointer-events-none'
                             }`}
@@ -79,7 +79,7 @@ const ProfilePanel = () => {
                             </div>
                             }
 
-                            <div>
+                            {roleRef.current == "staff" && <div>
                                 <button
                                     onClick={()=> navigator("/portal/updateProfile")}
                                     className={`border p-2 rounded
@@ -87,7 +87,7 @@ const ProfilePanel = () => {
                                 >
                                     Edit Profile
                                 </button>
-                            </div>
+                            </div>}
 
                         </div>
                     </div>

@@ -4,6 +4,7 @@ import Header from "../../components/basic/Header";
 import useFetch from "../../hooks/useFetch";
 import {useAuth} from "../../context/AuthContext";
 import {FileText, Megaphone} from "lucide-react";
+import usePageTile from "../../hooks/usePageTitle";
 
 const ReviewLeave = () => {
     const [applications, setApplications] = useState([]);
@@ -13,6 +14,7 @@ const ReviewLeave = () => {
     const {fetchData , response} = useFetch({endpoint : "/users/admin/leaveApplications"});
     const {token} = useAuth()
     const navigator = useNavigate()
+    usePageTile("Leave Applications")
 
     const fetchApplications = async () => {
         setLoading(true);

@@ -99,10 +99,10 @@ const NavigationPanel=()=>{
 
                     </ul>
                     <div>
-                        <div  className="bottom-0 mt-auto pt-5 border-t border-gray-400 dark:border-blue-200"> {/* Pushes logout to bottom */}
+                        <div  className="bottom-0 mt-auto px-3 pt-3 border-t border-gray-400/50 dark:border-blue-200/40"> {/* Pushes logout to bottom */}
                             <button
                                 onClick={logout}
-                                className="flex items-center w-full p-3 rounded-lg text-left text-gray-200 hover:bg-blue-300 hover:text-white transition-all duration-200 ease-in-out"
+                                className="flex items-center w-full p-3 rounded-lg text-left text-gray-200 hover:bg-blue-300/20 hover:text-white transition-all duration-200 ease-in-out"
                             >
                                 <LogOut className="mr-3 h-5 w-5 text-blue-950 dark:text-blue-200 " />
                                 <span className="font-medium text-blue-950 dark:text-blue-200 text-md">Logout</span>

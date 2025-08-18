@@ -9,10 +9,12 @@ import Header from "../../components/basic/Header";
 import Button from "../../components/basic/button/Button";
 import AppInput from "../../components/basic/input/AppInput";
 import useFetch from "../../hooks/useFetch";
+import usePageTile from "../../hooks/usePageTitle";
 
 const PostAnnouncement = () => {
     const [message, setMessage] = useState({ text: '', type: '' });
     const { token } = useAuth();
+    usePageTile("Post Announcement")
     const {fetchData , response} = useFetch({method: "POST" , endpoint: "/users/admin/announcement"})
     const {toasts, addToast, removeToast} = useToast()
    

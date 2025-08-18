@@ -9,6 +9,7 @@ import { useAuth } from "../../context/AuthContext";
 import MessageAlert from "../MessageAlert";
 import useFetch from "../../hooks/useFetch";
 import useToast from "../../hooks/useToast";
+import usePageTile from "../../hooks/usePageTitle"
 import {ToastContainer} from "../../Toast";
 
 
@@ -24,6 +25,7 @@ const Login =()=>{
     const {toasts, addToast, removeToast} = useToast()
     const { darkMode , onLoad , setLoading} = usePortal()
     const navigator = useNavigate()
+    usePageTile("Login")
 
     const inputStyle = `appearance-none rounded dark:bg-[#6F7FC0]/30 dark:border-[#EEA215] dark:text-white   bg-slate-100 border-blue-500 text-gray-700 border-b-[1px] w-full py-3 px-4 placeholder:italic leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent`
 

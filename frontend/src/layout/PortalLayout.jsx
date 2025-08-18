@@ -7,6 +7,7 @@ import {useAuth} from "../context/AuthContext";
 import ProfilePanel from "../components/ProfilePanel";
 import PortalLoading from "../components/basic/loading/PortalLoading";
 import AppLoading from "../components/basic/loading/AppLoading";
+import NotificationPanel from "../components/notification/NotificationPanel";
 
 const PortalLayout =()=>{
     const navigator = useNavigate()
@@ -22,6 +23,7 @@ const PortalLayout =()=>{
                     <div >
                         <ProfilePanel />
                         <NavigationPanel />
+                        <NotificationPanel />
                         <div className={`flex-1 ${ showPanel === "md:flex" && "md:pl-[215px]"} h-[100%] dark:bg-deep_blue_black pt-[70px] pb-4`}>
                             {loading ? <AppLoading /> : <Outlet/>}
                         </div>
