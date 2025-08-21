@@ -58,7 +58,7 @@ const NotificationPanel = () => {
                             }`}
                         >
                             <div className='bg-orange-600 dark:bg-blue-950 sticky top-0 w-full py-4 flex items-center justify-center'>
-                                <h1 className=' text-lg font-semibold text-white-color dark:text-blue-400'>Notifications</h1>
+                                <h1 className=' text-lg font-semibold text-white-color dark:text-blue-400'>Announcement</h1>
                             </div>
                             
                             <div className='h-full text-slate-700 dark:text-blue-200 overflow-y-scroll p-5'>

@@ -11,6 +11,7 @@ import useToast from "../hooks/useToast";
 import {useAuth} from "../context/AuthContext";
 import useFetch from "../hooks/useFetch";
 import ModalSection from "../components/ModalSection";
+import { ProcessIndicator } from '../components/basic/loading/PortalLoading';
 
 const UpdateProfile =() => {
     const navigator = useNavigate()
@@ -21,7 +22,6 @@ const UpdateProfile =() => {
     const initialValues = {
         name: "",
         email: "",
-        password: "",
         classTaught:"",
         subject: "",
         contact:"",
@@ -32,7 +32,6 @@ const UpdateProfile =() => {
     const validation = Yup.object().shape({
         name: Yup.string(),
         email: Yup.string().email('Invalid email'),
-        password: Yup.string().min(6, 'Password must be at least 6 characters'),
         classTaught: Yup.string(),
         subject: Yup.string().min(25, 'Reason must be at least 10 characters'),
         contact: Yup.string().min(10, "number should be 10 digit"),
@@ -44,7 +43,7 @@ const UpdateProfile =() => {
         const payload = {
             "name": `${values.name !== "" ? values.name : userRef.current.name}`,
             "email": `${values.email !== "" ? values.email : user.email}`,
-            "password": `${values.password !== "" ? values.password : user.password}`,
+            "password": `${user.password}`,
             "role" :`${user.role}`,
             "classTaught":`${values.classTaught !== "" ? values.classTaught : user.classTaught}`,
             "subject": `${values.subject !== "" ? values.subject : user.subject}`,
@@ -98,13 +97,6 @@ const UpdateProfile =() => {
                                 placeholder={user.email}
                             />
 
-                            <AppInput
-                                id={"password"}
-                                type={"password"}
-                                name={"password"}
-                                placeholder={"new password"}
-                            />
-
                             <div className={"w-full flex gap-4"}>
                                 <AppInput
                                     id={"classTaught"}
@@ -130,7 +122,7 @@ const UpdateProfile =() => {
                                 disabled={isSubmitting}
                                 // className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {isSubmitting ? 'Submitting...' : 'Update'}
+                                {isSubmitting ? <ProcessIndicator label={"Updating.."} /> : 'Update'}
                             </Button>
                         </Form>
                     )

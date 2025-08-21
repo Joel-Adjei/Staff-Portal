@@ -2,11 +2,10 @@ import React , {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom'
 import { usePortal } from "../../context/PortalContext";
 import Button from "../basic/button/Button";
-import {Eye , EyeClosed ,EyeOff } from 'lucide-react';
+import {Eye, EyeOff, Loader } from 'lucide-react';
 import * as Yup from 'yup';
 import { Formik , Form, Field, ErrorMessage } from "formik";
 import { useAuth } from "../../context/AuthContext";
-import MessageAlert from "../MessageAlert";
 import useFetch from "../../hooks/useFetch";
 import useToast from "../../hooks/useToast";
 import usePageTile from "../../hooks/usePageTitle"
@@ -23,7 +22,7 @@ const Login =()=>{
     const {  loginStaff ,loginAdmin , roleRef , setRoleRef, fetchProfile } = useAuth();
     const {fetchData ,response} = useFetch({method:"POST" , endpoint: endpoint ,})
     const {toasts, addToast, removeToast} = useToast()
-    const { darkMode , onLoad , setLoading} = usePortal()
+    const { darkMode , onLoad , setCurrentPage} = usePortal()
     const navigator = useNavigate()
     usePageTile("Login")
 
@@ -57,6 +56,7 @@ const Login =()=>{
                  roleRef.current === "admin" ? await loginAdmin(data) : await loginStaff(data)
                 await fetchProfile()
                 onLoad()
+                setCurrentPage("Dashboard")
                 navigator("/portal", {replace: true})
             }else{
                 console.log("erorrr")
@@ -128,7 +128,7 @@ const Login =()=>{
                     <button
                         className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm transition-colors duration-200 ${!isTeaching  ? 'text-md text-orange-600 font-medium' : ' text-gray-600 hover:bg-gray-200'}`}
                         onClick={() => {
-                            setRoleRef("non-teaching")
+                            setRoleRef("non teaching staff")
                             setIsTeaching(false)
                         }}
                     >
@@ -190,7 +190,13 @@ const Login =()=>{
                   disabled={isSubmitting}
                   className={`mx-auto mt-2 focus:outline-none  focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
-                    {isSubmitting ? "Processing" : "Login"}
+                    {isSubmitting ? 
+                        <div className="flex items-center gap-2">
+                            <Loader className="animate-spin" size={20} /> 
+                            Please wait..
+                        </div>
+                        
+                    : "Login"}
                 </Button>
               </div>
             </Form>

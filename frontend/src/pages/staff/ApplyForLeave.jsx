@@ -10,6 +10,7 @@ import Button from "../../components/basic/button/Button";
 import useToast from "../../hooks/useToast";
 import {ToastContainer} from "../../Toast";
 import useFetch from "../../hooks/useFetch";
+import { ProcessIndicator } from '../../components/basic/loading/PortalLoading';
 
 const ApplyForLeave = () => {
     const [message, setMessage] = useState({ text: '', type: '' });
@@ -106,26 +107,12 @@ const ApplyForLeave = () => {
                             {/*<ErrorMessage name="endDate" component="div" className="text-red-500 text-xs mt-1" />*/}
                         </div>
 
-                        <div>
-                            <label htmlFor="comments" className="block text-gray-700 text-sm font-bold mb-2">
-                                Additional Comments (Optional)
-                            </label>
-                            <AppInput
-                                as="textarea"
-                                id="comments"
-                                name="comments"
-                                rows="2"
-                                className="shadow border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Any other details you want to provide."
-                            />
-                        </div>
-
                         <Button
                             type="submit"
                             disabled={isSubmitting}
                             // className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {isSubmitting ? 'Submitting...' : 'Submit Application'}
+                            {isSubmitting ? <ProcessIndicator label={'Submitting...'} /> : 'Submit Application'}
                         </Button>
                     </Form>
                 )}

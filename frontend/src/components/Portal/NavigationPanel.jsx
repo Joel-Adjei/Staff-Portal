@@ -31,8 +31,8 @@ const NavigationPanel=()=>{
                     <ul>
                         <NavigationItem
                             icon={Home}
-                            label="Home"
-                            viewName="Home"
+                            label="Dashboard"
+                            viewName="Dashboard"
                             to={"/portal"}
                         />
                         {roleRef.current === 'staff' && (
@@ -43,11 +43,11 @@ const NavigationPanel=()=>{
                                     viewName="submit-materials"
                                     to={"/portal/submit-teaching-materials"}
                                 />
-                                <NavigationItem
+                                {/* <NavigationItem
                                     icon={GraduationCap}
                                     label="Performance Reports"
                                     viewName="performance-reports"
-                                />
+                                /> */}
                             </>
                         )}
 

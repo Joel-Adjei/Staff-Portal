@@ -1,8 +1,8 @@
 import React from "react";
 import {ErrorMessage, Field, Form} from "formik";
 
-const inputStyle = `appearance-none rounded dark:bg-[#6F7FC0]/30 dark:border-[#EEA215] dark:text-white   bg-slate-100 border-blue-500 text-gray-700 border-b-[1px] w-full py-3 px-4 placeholder:italic leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent`
-
+export const inputStyle = `appearance-none rounded dark:bg-[#6F7FC0]/30 dark:border-[#EEA215] dark:text-white   bg-slate-100 border-blue-500 text-gray-700 border-b-[1px] w-full py-3 px-4 placeholder:italic leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent`
+export const label ="block text-sm font-medium text-gray-700 dark:text-blue-200 mb-2"
 // --- Reusable Input Component ---
 const AppInput = ({ as , type, placeholder, name, otherProps , id }) => {
     return (

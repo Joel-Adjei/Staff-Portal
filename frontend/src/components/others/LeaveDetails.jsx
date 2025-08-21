@@ -3,30 +3,33 @@ import ModalSection from "../ModalSection";
 import {useParams} from 'react-router-dom'
 import useFetch from "../../hooks/useFetch";
 import {useAuth} from "../../context/AuthContext";
+import PortalLoading from '../basic/loading/PortalLoading';
 
 const LeaveDetails =()=>{
     const {id} = useParams()
     const [applications, setApplications] = useState();
-    const [statusEndpoint , setStatusEndpoint ] = useState(`/users/admin/LeaveApplication/${id}/approve`)
+    const [statusEndpoint , setStatusEndpoint ] = useState(`/users/admin/LeaveApplication/approve/${id}`)
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
     const {token} = useAuth()
     const {fetchData: updatingStatus , response: statusResponse} = useFetch({method: "PUT" , endpoint : statusEndpoint})
     const { fetchData , response} = useFetch({endpoint :`/users/admin/leaveApplications/${id}`});
 
     const fetchApplications = async () => {
-        // setLoading(true)
+        setLoading(true)
         try {
             await fetchData({token: token.current})
             if(response.current.ok){
                 const data = await response.current.json()
                 console.log(data)
-                await setApplications(data);
+                setApplications(data);
             }
         } catch (err) {
             console.log(err)
         } finally {
-            //  setLoading(false);
+           
         }
+        setLoading(false);
     };
 
     useEffect(()=>{
@@ -36,8 +39,9 @@ const LeaveDetails =()=>{
 
 
     const updateApplicationStatus = async (email, newStatus) => {
-        setStatusEndpoint( newStatus === 'Approved' ? `/users/admin/LeaveApplication/${id}/approve` : `/users/admin/LeaveApplication/${id}/reject`)
+        setStatusEndpoint( newStatus === 'Approved' ? `/users/admin/LeaveApplication/approve/${id}` : `/users/admin/LeaveApplication/reject/${id}`)
         setMessage('');
+        setLoading(true)
         try {
             const payload ={
                 "email" : email
@@ -52,15 +56,19 @@ const LeaveDetails =()=>{
             // fetchApplications(); // Refresh the list
         } catch (err) {
             setMessage(`Status update failed: ${err.response?.data?.message || err.message || 'Server error'}`);
+        }finally{
+            setLoading(false)
         }
     };
 
 
     return(
         <ModalSection>
+            <PortalLoading loading={loading} />
             {
                 applications && (
                 <div className=''>
+                    
 
                     <div className='uppercase text-sm text-gray-700 dark:text-blue-200'>
                         <div>
@@ -88,8 +96,8 @@ const LeaveDetails =()=>{
 
                     <div className="px-3 py-4 whitespace-nowrap absolute top-0 right-0 text-sm">
                                         <span className={`px-9 py-1 inline-flex leading-5 font-semibold rounded-full ${
-                                            applications.status === 'Approved' ? 'bg-green-100 text-green-800' :
-                                            applications.status === 'Rejected' ? 'bg-red-100 text-red-800' :
+                                            applications.status === 'approved' ? 'bg-green-100 text-green-800' :
+                                            applications.status === 'rejected' ? 'bg-red-100 text-red-800' :
                                                     'bg-yellow-100 text-yellow-800'
                                         }`}>
                                             {applications.status}

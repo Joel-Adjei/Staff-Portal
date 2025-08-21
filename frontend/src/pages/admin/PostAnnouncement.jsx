@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import * as Yup from 'yup';
 import {useAuth} from "../../context/AuthContext";
-import {Megaphone} from 'lucide-react';
+import {Loader, Megaphone} from 'lucide-react';
 import {Formik,ErrorMessage , Form , Field} from "formik";
 import {ToastContainer} from "../../Toast";
 import useToast from "../../hooks/useToast";
@@ -98,7 +98,12 @@ const PostAnnouncement = () => {
                             disabled={isSubmitting}
                             className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {isSubmitting ? 'Posting...' : 'Post Announcement'}
+                            {isSubmitting ? 
+                                <div className="flex gap-2">
+                                    <Loader className="animate-spin text-orange-500 dark:text-blue-300" size={25} />
+                                    Posting..
+                                </div>
+                                 : 'Post Announcement'}
                         </Button>
                     </Form>
                 )}

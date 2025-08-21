@@ -113,7 +113,7 @@ const ManageStaff = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex items-center dark:bg-blue-50 rounded dark:p-1 justify-end space-x-2">
                             <button className="text-green-600 hover:text-green-900 p-1 rounded hover:bg-green-50 transition-colors">
-                                <Edit
+                                <Eye
                                     className="w-4 h-4"
                                     onClick={()=> navigator(`../manageStaff/${user.id}`)}
                                 />
@@ -139,7 +139,7 @@ const ManageStaff = () => {
 
     if(loading)
         return (
-            <div>
+            <div className={"w-full h-[100vh]"}>
                 <PortalLoading />
             </div>
         )

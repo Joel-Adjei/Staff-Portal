@@ -3,10 +3,11 @@ import useFetch from "../../hooks/useFetch";
 import {useAuth} from "../../context/AuthContext";
 import Button from "../../components/basic/button/Button";
 import Header from "../../components/basic/Header";
-import {MessageSquare , Trash2Icon} from "lucide-react";
+import {EyeIcon, MessageSquare , Trash2Icon} from "lucide-react";
 import useToast from '../../hooks/useToast';
 import { ToastContainer } from '../../Toast';
 import usePageTile from "../../hooks/usePageTitle";
+import { useNavigate } from 'react-router-dom';
 
 const ReviewSuggestions = () => {
     const [suggestions, setSuggestions] = useState([]);
@@ -16,6 +17,7 @@ const ReviewSuggestions = () => {
     const {fetchData , response} = useFetch({endpoint : "/users/admin/viewSuggestions"})
     const {token} = useAuth()
     usePageTile("Suggestions")
+    const navigator = useNavigate()
     // const {toasts, addToast, removeToast} = useToast
 
 
@@ -26,9 +28,8 @@ const ReviewSuggestions = () => {
             await fetchData({token: token.current})
             if (response.current.ok) {
                 const data = await response.current.json()
-                const tempArr = [data]
-                console.log(tempArr)
-                setSuggestions(tempArr)
+                console.log(data)
+                setSuggestions(data)
                 // addToast('Suggestion submitted anonymously!','success');
             }
     
@@ -42,19 +43,6 @@ const ReviewSuggestions = () => {
     useEffect(() => {
         fetchSuggestions();
     }, []);
-
-    const handleDeleteSuggestion = async (id) => {
-        if (window.confirm('Are you sure you want to delete this suggestion?')) {
-            setMessage('');
-            try {
-                await api.delete(`/admin/suggestions/${id}`);
-                setMessage('Suggestion deleted successfully!');
-                // fetchSuggestions(); // Refresh the list
-            } catch (err) {
-                setMessage(`Deletion failed: ${err.response?.data?.message || err.message || 'Server error'}`);
-            }
-        }
-    };
 
     const shortenText = (text) =>{
         let mid = 50
@@ -79,14 +67,16 @@ const ReviewSuggestions = () => {
                     <p className="text-gray-500">No new suggestions.</p>
                 ) : <div className={"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"}>
                     {suggestions.map((sugg, index) => (
-                        <div key={index} className="flex justify-between p-5 border border-gray-200 rounded-md bg-white dark:bg-blue-900 shadow-sm">
+                        <div key={index} className="flex justify-between p-5 border border-gray-300  dark:border-blue-300 rounded-md bg-gray-200 dark:bg-blue-900 shadow-sm">
                             <div className="flex justify-between items-start mb-2">
                                 <h4 className="text-lg font-semibold text-gray-800 dark:text-blue-300">{shortenText(sugg.suggestion_box)} </h4>
                             </div>
+
+
                             <div className="flex space-x-2">
-                                <button onClick={() => handleDeleteSuggestion(sugg.id)}
-                                        className=" h-fit bg-red-600 hover:bg-red-700 text-sm rounded-md text-white py-1 px-3">
-                                    <Trash2Icon />
+                                <button onClick={() => navigator(`/portal/review-suggestions/${index+1}`)}
+                                        className=" h-fit bg-orange-600 hover:bg-orange-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-sm rounded-md text-white py-1 px-3">
+                                    <EyeIcon />
                                 </button>
                             </div>
                         </div>

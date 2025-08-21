@@ -21,6 +21,7 @@ import LeaveDetails from "./components/others/LeaveDetails";
 import StaffProfileSetup from "./components/ProfileSetup/StaffProfileSetup";
 import StaffDetails from "./components/others/StaffDetails";
 import AnnouncementDetail from './components/others/AnnounceDetails'
+import SuggestionDetails from './components/others/SuggestionDetails'
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
               <Route path={"review-leave/:id"} element={<LeaveDetails />} />
               <Route path={"manageStaff/:id"} element={<StaffDetails />} />
               <Route path={"review-suggestions"} element={<ReviewSuggestions />} />
+              <Route path={"review-suggestions/:id"} element={<SuggestionDetails />} />
           </Route>
 
       </Route>

@@ -5,7 +5,7 @@ import Button from "../../components/basic/button/Button";
 import * as Yup from "yup";
 import {ToastContainer} from "../../Toast";
 import Header from "../../components/basic/Header";
-import {User, X} from "lucide-react";
+import {Loader, User, X} from "lucide-react";
 import useToast from "../../hooks/useToast";
 import {useNavigate} from "react-router-dom";
 import ModalSection from "../../components/ModalSection";
@@ -58,10 +58,10 @@ const AddStaff =()=>{
             if(addStaffResponse.current.ok){
                 console.log(data)
                 navigator(-1)
+                addToast("staff added successful" , "success" , 6000)
             }else {
                 addToast(data.message, "error" , 6000)
             }
-            addToast("staff added successful" , "success" , 6000)
             fetchAllStaffs();
         }catch (e) {
             console.log(e)
@@ -114,7 +114,13 @@ const AddStaff =()=>{
                                     disabled={formik.isSubmitting}
                                     className={`mx-auto mt-2 focus:outline-none  focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed`}
                                 >
-                                    {formik.isSubmitting ? "Processing" : "Add"}
+                                    {formik.isSubmitting ? 
+                                        <div className="flex items-center gap-2">
+                                            <Loader className="animate-spin" size={20} /> 
+                                            Processing..
+                                        </div>
+                    
+                                        : "Add"}
                                 </Button>
                             </Form>
                         )

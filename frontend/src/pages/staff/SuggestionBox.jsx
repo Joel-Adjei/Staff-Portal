@@ -3,13 +3,14 @@ import {Lightbulb} from "lucide-react";
 import MessageAlert from "../../components/MessageAlert";
 import { Formik, Form, Field, ErrorMessage, useFormikContext } from 'formik';
 import * as Yup from 'yup';
-import AppInput from "../../components/basic/input/AppInput";
+import AppInput, { label } from "../../components/basic/input/AppInput";
 import Header from "../../components/basic/Header";
 import Button from "../../components/basic/button/Button";
 import {ToastContainer} from "../../Toast";
 import useToast from "../../hooks/useToast";
 import useFetch from '../../hooks/useFetch';
 import { useAuth } from '../../context/AuthContext';
+import { ProcessIndicator } from '../../components/basic/loading/PortalLoading';
 
 const SuggestionBox = () => {
     const [message, setMessage] = useState({ text: '', type: '' });
@@ -54,7 +55,7 @@ const SuggestionBox = () => {
     };
 
     return (
-        <div className="p-6">
+        <div className="p-6 pt-0">
             <ToastContainer toasts={toasts} removeToast={removeToast} />
             <Header
                Icon={Lightbulb} title={"Suggestion Box (Anonymous)"}
@@ -65,9 +66,9 @@ const SuggestionBox = () => {
                 onSubmit={handleSubmit}
             >
                 {({ isSubmitting }) => (
-                    <Form className="space-y-4">
+                    <Form className="space-y-4 pt-4">
                         <div>
-                            <label htmlFor="suggestion" className="block text-gray-600 text-sm font-bold mb-2">
+                            <label htmlFor="suggestion" className={label}>
                                 Your Suggestion/Complaint/Thought
                             </label>
                             <AppInput
@@ -84,7 +85,7 @@ const SuggestionBox = () => {
                             disabled={isSubmitting}
                             className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {isSubmitting ? 'Submitting...' : 'Submit Suggestion'}
+                            {isSubmitting ? <ProcessIndicator label={'Submitting...'} /> : 'Submit Suggestion'}
                         </Button>
                     </Form>
                 )}

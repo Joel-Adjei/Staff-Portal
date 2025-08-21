@@ -1,11 +1,13 @@
 import React from 'react';
-import {PanelLeft, UserCircle, Bell, Moon, Sun} from "lucide-react";
+import {PanelLeft, Megaphone, UserCircle, Bell, Moon, Sun} from "lucide-react";
 import {usePortal} from "../../context/PortalContext";
+import { useAuth } from '../../context/AuthContext';
 
 const NavBar =()=>{
     const { currentPage , toggleDarkMode, handleThemeChange,toggleNotfiPanel,
         toggleProfilePanel ,togglePanel ,togglePanelMobile} = usePortal()
 
+    const {roleRef} = useAuth()
 
     function formatString(title) {
         return title.split('-').map((word)=> word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
@@ -35,14 +37,15 @@ const NavBar =()=>{
                 </div>
 
                 <div className={" flex items-center gap-1 md:gap-2"}>
+                    { roleRef.current !== "admin" &&
                     <button
                         onClick={()=> toggleNotfiPanel()}
                     >
                         <div className="size-[35px] flex items-center justify-center rounded-full cursor-pointer bg-gray-200 dark:bg-blue-200 ">
-                            <Bell  className={"size-8 text-[#FF970B] p-1 dark:text-blue-950  "} />
+                            <Megaphone  className={"size-8 text-[#FF970B] p-1 dark:text-blue-950  "} />
                         </div>
                     </button>
-                    
+                    }
 
                     <button className={" flex items-center gap-2 hover:bg-blue-300/20 px-2 py-1 cursor-pointer rounded"}
                             onClick={()=> toggleProfilePanel()}

@@ -48,8 +48,8 @@ const ReviewLeave = () => {
 
             {message && <p className="mb-4 text-center text-3xl font-medium text-blue-600">{message}</p>}
 
-            <div className="overflow-x-auto rounded-xl border border-gray-200">
-                <table className="min-w-full divide-y divide-gray-200">
+            <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-xl">
+                <table className="min-w-full divide-y divide-gray-200 ">
                     <thead className="bg-gray-50 text-gray-500 dark:bg-blue-300 dark:text-blue-950 dark:border-none">
                     <tr>
                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Staff</th>
@@ -73,8 +73,8 @@ const ReviewLeave = () => {
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{app.start_date} to {app.end_date}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                                         <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                                            app.status === 'Approved' ? 'bg-green-100 text-green-800' :
-                                                app.status === 'Rejected' ? 'bg-red-100 text-red-800' :
+                                            app.status === 'approved' ? 'bg-green-100 text-green-800' :
+                                                app.status === 'rejected' ? 'bg-red-100 text-red-800' :
                                                     'bg-yellow-100 text-yellow-800'
                                         }`}>
                                             {app.status}

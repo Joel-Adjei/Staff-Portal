@@ -61,8 +61,8 @@ const NavigationPanelMobile =()=> {
                     <ul>
                         <NavigationItem
                             icon={Home}
-                            label="Home"
-                            viewName="Home"
+                            label="Dashboard"
+                            viewName="Dashboard"
                             to={"/portal"}
                         />
                         {roleRef.current === 'staff' && (
@@ -73,11 +73,12 @@ const NavigationPanelMobile =()=> {
                                     viewName="submit-materials"
                                     to={"/portal/submit-teaching-materials"}
                                 />
-                                <NavigationItem
-                                    icon={GraduationCap}
-                                    label="Performance Reports"
-                                    viewName="performance-reports"
-                                />
+                                {/*<NavigationItem*/}
+                                {/*    icon={GraduationCap}*/}
+                                {/*    label="Performance Reports"*/}
+                                {/*    viewName="performance-reports"*/}
+                                {/*    to={"/portal/submit-performance"}*/}
+                                {/*/>*/}
                             </>
                         )}
 

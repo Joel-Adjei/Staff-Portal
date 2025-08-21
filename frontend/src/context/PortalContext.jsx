@@ -10,11 +10,29 @@ export const PortalContextProvider =({children})=>{
     const [showPanel , setShowPanel] = useState("md:flex")
     const [showPanelMobile , setShowPanelMobile] = useState("hidden")
     const [showNotiMobile , setNotiMobile] = useState("hidden")
-    const [currentPage , setCurrentPage] = useState("Home")
+    const [currentPage , setCurrentPage] = useState("Dashboard")
 
-    // useEffect(() => {
-    //     setCurrentPage("Home")
-    // }, []);
+    
+    const resetPage =()=>{
+        setCurrentPage("Dashboard")
+    }
+    useEffect(() => {
+        // Check if theme is stored in localStorage or system preference
+        const savedTheme = localStorage.theme;
+        const systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && systemDarkMode)) {
+          setDarkMode(true);
+          document.documentElement.classList.add('dark');
+        } else {
+          setDarkMode(false);
+          document.documentElement.classList.remove('dark');
+        }
+      }, []);
+      
+    useEffect(() => {
+       resetPage()
+    }, []);
 
     function onLoad(){
         setLoading(true)

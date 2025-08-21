@@ -8,7 +8,15 @@ const ProfilePanel = () => {
     const navigator = useNavigate()
     const panelRef = useRef(null);
     const {openProfile,  toggleProfilePanel , toggleDarkMode , handleThemeChange} = usePortal()
-    const {userRef , roleRef}  = useAuth()
+    const {userRef, roleRef, resetUserData}  = useAuth()
+
+    const logout = () => {
+        // Clear user data upon logout
+        resetUserData();
+        navigator("/auth/login")
+        // In a real app, you'd remove the JWT token from localStorage here
+        console.log("User signed out successfully.");
+    };
 
 
     return (
@@ -35,21 +43,31 @@ const ProfilePanel = () => {
                         >
                             {/* Profile Header */}
                             <div className={`bg-gray-200/40 dark:bg-blue-50/10 p-6 text-white rounded-lg`}>
-                                <div className="flex flex-col gap-3 items-center space-x-4">
-                                    <div className="w-[130px] h-[130px] bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
+                                <div className="relative flex flex-col gap-3 items-center space-x-4">
+                                    <div className="relative w-[130px] h-[130px] bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
                                         <User className="w-[100px] h-[100px]" />
+
+                                        { roleRef.current == "staff" &&
+                                        <button 
+                                            className='absolute top-1 right-1 shadow-lg z-0 '
+                                            onClick={()=> navigator("/portal/updateProfile")}
+                                        >
+                                            <Edit className='size-[30px] text-orange-600 dark:text-blue-950 dark:blue-200 bg-slate-100 dark:bg-blue-100 rounded p-1.7 z-0' />
+                                        </button>
+                                        }
                                     </div>
                                     {userRef.current && <div>
                                         <h3 className="text-3xl text-orange-color text-center font-semibold">{userRef.current.name}</h3>
-                                        <p className="bg-gradient-to-r from-orange-500 to-orange-600 mt-2 rounded-full text-white text-center">{userRef.current.role}</p>
+                                        <p className="bg-gradient-to-r from-orange-500 to-orange-600 mt-2 rounded-full text-white text-center">{userRef.current.subject}</p>
                                     </div>}
+
                                 </div>
 
                             </div>
 
-                            <div className={`w-full flex justify-center`}>
+                            <div className={`w-full flex pt-4 justify-center`}>
                                 <button
-                                    className={`mr-2 mx-auto mt-2 p-1 border h-fit bg-gray-200 flex items-center gap-2 rounded-full`}
+                                    className={` p-1 border h-fit bg-gray-200 flex items-center gap-2 rounded-full`}
                                     onClick={()=> {
                                         toggleDarkMode()
                                         handleThemeChange()
@@ -66,28 +84,32 @@ const ProfilePanel = () => {
                             <div className="p-6 space-y-4">
                                 <div className="flex items-center space-x-3 text-gray-700 dark:text-blue-200">
                                     <Mail className="w-4 h-4 text-orange-color"/>
-                                    <span className="text-sm">{userRef.current.email}</span>
+                                    <span className="text-md">{userRef.current.email}</span>
                                 </div>
-                                <div className="flex items-center space-x-3 text-gray-700 dark:text-blue-200">
-                                    <Phone className="w-4 h-4 text-orange-color"/>
-                                    <span className="text-sm">+{userRef.current.contact}</span>
-                                </div>
-                                <div className="flex items-center space-x-3 text-gray-700 dark:text-blue-200">
-                                    <MapPin className="w-4 h-4 text-orange-color"/>
-                                    <span className="text-sm">{userRef.current.address}</span>
-                                </div>
+
+                                {
+                                    roleRef.current == "staff" && 
+                                    <>
+                                        <Info Icon={Phone} label={userRef.current.contact} />
+                                        <Info Icon={MapPin} label={userRef.current.address} />
+                                        <Info Icon={Phone} label={userRef.current.role} />
+                                        <Info Icon={MapPin} label={userRef.current.classTaught} />
+                                    </>
+                                }
                             </div>
                             }
 
-                            {roleRef.current == "staff" && <div>
-                                <button
-                                    onClick={()=> navigator("/portal/updateProfile")}
-                                    className={`border p-2 rounded
-                                    dark:text-blue-200 dark:border-blue-200`}
-                                >
-                                    Edit Profile
-                                </button>
-                            </div>}
+        
+                        <div className="absolute w-full bottom-0 mt-auto p-4"> {/* Pushes logout to bottom */}
+                            <button
+                                onClick={logout}
+                                className="flex items-center w-full p-3 pl-4 rounded-lg text-left text-gray-200 hover:bg-blue-300/30 hover:text-white transition-all duration-200 ease-in-out"
+                            >
+                                {/*<LogIn className="mr-3 h-5 w-5" />*/}
+                                <LogOut className="mr-3 h-5 w-5 text-blue-950 dark:text-blue-200 " />
+                                <span className="font-medium text-blue-950 dark:text-blue-200 text-md">Logout</span>
+                            </button>
+                        </div>
 
                         </div>
                     </div>
@@ -95,3 +117,12 @@ const ProfilePanel = () => {
 };
 
 export default ProfilePanel;
+
+const Info =({Icon , label})=>{
+    return(
+        <div className="flex items-center space-x-3 text-gray-700 dark:text-blue-200">
+            <Icon className="w-4 h-4 text-orange-color"/>
+            <span className="text-md">{label}</span>
+        </div>
+    )
+}

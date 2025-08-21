@@ -10,6 +10,7 @@ import useFetch from "../../hooks/useFetch";
 import useToast from "../../hooks/useToast";
 import {useAuth} from "../../context/AuthContext";
 import {ToastContainer} from "../../Toast";
+import {ProcessIndicator} from "../basic/loading/PortalLoading";
 
 const StaffProfileSetup =()=>{
     const [displayPassword , setDisplayPassword] = useState("password")
@@ -22,6 +23,7 @@ const StaffProfileSetup =()=>{
         name: "",
         email: "",
         password: "",
+        confirmPassword: "",
         classTaught:"",
         subject: "",
         contact:"",
@@ -33,6 +35,7 @@ const StaffProfileSetup =()=>{
         name: Yup.string(),
         email: Yup.string().email('Invalid email'),
         password: Yup.string().required("Please Enter a new password").min(6, 'Password must be at least 6 characters'),
+        confirmPassword: Yup.string().oneOf([Yup.ref('password'),null] , "Passwords must match").required("Confirm Password is required"),
         classTaught: Yup.string().required("Please enter your class you teach"),
         subject: Yup.string().required("Subject  is required").min(10, 'Reason must be at least 10 characters'),
         contact: Yup.string().required("Contact is required").min(10, "number should be 10 digit"),
@@ -76,7 +79,7 @@ const StaffProfileSetup =()=>{
     return(
         <>
             <ToastContainer toasts={toasts} removeToast={removeToast} />
-            <div className={"bg-gray-100 h-[100vh] flex flex-col justify-cente items-center p-5"}>
+            <div className={"bg-gray-100 dark:bg-deep_blue_black h-[100vh] flex flex-col justify-cente items-center p-5"}>
                 <Header title={"Setup Your Profile"} Icon={User2Icon} />
 
                 <div className={`max-w-[500px] bg-white dark:bg-blue-950 rounded-lg shadow-xl`}>
@@ -99,16 +102,36 @@ const StaffProfileSetup =()=>{
                                         name={"email"}
                                         placeholder={user.email}
                                     />
+                                    <div className={" h-[1px] bg-gray-300 dark:bg-blue-200 w-full mb-5 mt-1"}></div>
+
+                                    <div className={"relative"}>
+                                        <AppInput
+                                            id={"password"}
+                                            name={"password"}
+                                            type={displayPassword}
+                                            placeholder={"New Password"}
+                                        />
+
+                                        <button className={"absolute top-1 right-2 p-2 text-gray-500 rounded-lg hover:cursor-pointer hover:bg-gray-200"}
+                                                onClick={toggleDisplayPass}
+                                                type={"button"}
+                                        >
+                                            {
+                                                displayPassword === "password" ? <EyeOff /> : <Eye/>
+                                            }
+                                        </button>
+                                    </div>
 
                                     <AppInput
-                                        id={"password"}
-                                        name={"password"}
-                                        type={displayPassword}
-                                        placeholder={"New Password"}
+                                        id={"confirmPassword"}
+                                        name={"confirmPassword"}
+                                        type={"password"}
+                                        placeholder={"Confirm Password"}
                                     />
 
                                     <div className={` flex flex-col gap-3 p-2`}>
                                         <div className={" h-[1px] bg-gray-300 dark:bg-blue-200 w-full mb-2"}></div>
+
                                         <div  className={`flex gap-4`}>
                                             <AppInput
                                                 id={"subject"}
@@ -138,7 +161,7 @@ const StaffProfileSetup =()=>{
                                     />
 
                                     <Button type={"submit"} >
-                                        { isSubmitting ? "Updating" : "Update"}
+                                        { isSubmitting ? <ProcessIndicator label={"Updating"} /> : "Update"}
                                     </Button>
                                 </Form>
                             )
