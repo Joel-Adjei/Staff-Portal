@@ -9,7 +9,7 @@ const useFetch =({method="GET",endpoint })=>{
         setLoading(true)
 
         // http://localhost:3000 || https://khms-backend.onrender.com  "https://staff-portal-60yi.onrender.com"
-        const API_BASE_URL = "http://localhost:3000"
+        const API_BASE_URL = "https://khms-backend.onrender.com"
 
         try{
              response.current =  await fetch(`${API_BASE_URL}${endpoint}`,
