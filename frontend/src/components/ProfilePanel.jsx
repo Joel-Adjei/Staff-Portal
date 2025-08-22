@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import {useNavigate} from 'react-router-dom'
-import {User, X, Settings, Bell, LogOut, Edit, Mail, Phone, MapPin, Calendar, Moon, Sun} from 'lucide-react';
+import {User, X, School, Bell, LogOut, Edit, Mail, Phone, MapPin, Calendar, Moon, Sun, UserCheck} from 'lucide-react';
 import {usePortal} from "../context/PortalContext";
 import {useAuth} from "../context/AuthContext";
 
@@ -92,8 +92,8 @@ const ProfilePanel = () => {
                                     <>
                                         <Info Icon={Phone} label={userRef.current.contact} />
                                         <Info Icon={MapPin} label={userRef.current.address} />
-                                        <Info Icon={Phone} label={userRef.current.role} />
-                                        <Info Icon={MapPin} label={userRef.current.classTaught} />
+                                        <Info Icon={UserCheck} label={userRef.current.role} />
+                                        <Info Icon={School} label={userRef.current.classTaught} />
                                     </>
                                 }
                             </div>

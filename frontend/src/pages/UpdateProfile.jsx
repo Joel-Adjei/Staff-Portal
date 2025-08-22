@@ -33,7 +33,7 @@ const UpdateProfile =() => {
         name: Yup.string(),
         email: Yup.string().email('Invalid email'),
         classTaught: Yup.string(),
-        subject: Yup.string().min(25, 'Reason must be at least 10 characters'),
+        subject: Yup.string(),
         contact: Yup.string().min(10, "number should be 10 digit"),
         address: Yup.string().min(10, 'Reason must be at least 10 characters'),
     });

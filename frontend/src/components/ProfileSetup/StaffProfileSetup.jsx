@@ -37,9 +37,9 @@ const StaffProfileSetup =()=>{
         password: Yup.string().required("Please Enter a new password").min(6, 'Password must be at least 6 characters'),
         confirmPassword: Yup.string().oneOf([Yup.ref('password'),null] , "Passwords must match").required("Confirm Password is required"),
         classTaught: Yup.string().required("Please enter your class you teach"),
-        subject: Yup.string().required("Subject  is required").min(10, 'Reason must be at least 10 characters'),
+        subject: Yup.string().required("Subject  is required"),
         contact: Yup.string().required("Contact is required").min(10, "number should be 10 digit"),
-        address: Yup.string().required("Address is required").min(10, 'Reason must be at least 10 characters'),
+        address: Yup.string().required("Address is required"),
     });
 
     const handleSubmitUpdate = async (values, { setSubmitting , resetForm })=>{

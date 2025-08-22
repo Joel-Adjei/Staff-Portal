@@ -4,7 +4,8 @@ import NavigationItem from "./NavigationItem";
 import {
     Home , BookOpen , GraduationCap , Calendar , CheckSquare ,
     Lightbulb , Bell , User , ClipboardList , FileText ,
-    Megaphone ,MessageSquare , LogOut
+    Megaphone ,MessageSquare , LogOut,
+    Calendar1
 } from "lucide-react";
 import {usePortal} from "../../context/PortalContext";
 import NavigationPanelMobile from "./NavigationPanelMobile";
@@ -75,7 +76,7 @@ const NavigationPanel=()=>{
                                     viewName="manage-staff"
                                     to={"/portal/manageStaff"}
                                 />
-                                <NavigationItem icon={ClipboardList} label="Review Materials" viewName="review-materials" />
+                                {/* <NavigationItem icon={ClipboardList} label="Review Materials" viewName="review-materials" /> */}
                                 <NavigationItem
                                     icon={Megaphone}
                                     label="Post Announcement"
@@ -88,6 +89,13 @@ const NavigationPanel=()=>{
                                     viewName="review-leave"
                                     to={"/portal/review-leave"}
                                 />
+                                
+                                <NavigationItem
+                                    icon={FileText}
+                                    label="View Lesson Note"
+                                    viewName="view-lesson"
+                                    to={"/portal/view-lesson"}
+                                />
                                 <NavigationItem
                                     icon={MessageSquare}
                                     label="Review Suggestions"
@@ -96,6 +104,14 @@ const NavigationPanel=()=>{
                                 />
                             </>
                         )}
+
+                        
+                                <NavigationItem
+                                    icon={Calendar1}
+                                    label="Academic Calender"
+                                    viewName="academic-calender"
+                                    to={"/portal/academic-calender"}
+                                />
 
                     </ul>
                     <div>

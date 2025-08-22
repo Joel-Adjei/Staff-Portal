@@ -11,6 +11,8 @@ export const PortalContextProvider =({children})=>{
     const [showPanelMobile , setShowPanelMobile] = useState("hidden")
     const [showNotiMobile , setNotiMobile] = useState("hidden")
     const [currentPage , setCurrentPage] = useState("Dashboard")
+    const [events, setEvents] = useState([]);
+
 
     
     const resetPage =()=>{
@@ -72,6 +74,8 @@ export const PortalContextProvider =({children})=>{
         setShowPanelMobile(prevState => prevState === "flex" ? "hidden" : "flex")
     }
 
+    
+
 
     return(
         <PortalContext.Provider value={{
@@ -92,6 +96,8 @@ export const PortalContextProvider =({children})=>{
             toggleProfilePanel,
             openNotifi,
             toggleNotfiPanel,
+            events,
+            setEvents
         }}>
             {children}
         </PortalContext.Provider>

@@ -11,16 +11,16 @@ const getFirstDayOfMonth = (date) => {
 
 
 
-const DashCalender =()=>{
+const DashCalender =({events = []})=>{
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(new Date());
 
-    const [events] = useState([
-        { id: 1, title: "Staff Meeting", date: new Date(2025, 6, 28), time: "09:00 AM", type: "meeting" },
-        { id: 2, title: "Parent Conference", date: new Date(2025, 6, 30), time: "02:00 PM", type: "conference" },
-        { id: 3, title: "School Assembly", date: new Date(2025, 7, 1), time: "10:00 AM", type: "event" },
-        { id: 4, title: "Teacher Training", date: new Date(2025, 7, 5), time: "03:00 PM", type: "training" }
-    ]);
+    // const [events] = useState([
+    //     { id: 1, title: "Staff Meeting", date: new Date(2025, 6, 28), time: "09:00 AM", type: "meeting" },
+    //     { id: 2, title: "Parent Conference", date: new Date(2025, 6, 30), time: "02:00 PM", type: "conference" },
+    //     { id: 3, title: "School Assembly", date: new Date(2025, 7, 1), time: "10:00 AM", type: "event" },
+    //     { id: 4, title: "Teacher Training", date: new Date(2025, 7, 5), time: "03:00 PM", type: "training" }
+    // ]);
 
     const daysInMonth = getDaysInMonth(currentDate);
     const firstDay = getFirstDayOfMonth(currentDate);
@@ -40,7 +40,7 @@ const DashCalender =()=>{
         const isToday = date.toDateString() === today.toDateString();
         const isSelected = date.toDateString() === selectedDate.toDateString();
         const hasEvent = events.some(event =>
-            event.date.toDateString() === date.toDateString()
+            new Date(event.date).toDateString() === date.toDateString()
         );
 
         days.push(
@@ -62,7 +62,7 @@ const DashCalender =()=>{
     }
 
     return (
-        <div className="bg-white-color dark:bg-blue-950 rounded-xl shadow-xl p-4">
+        <div className="bg-slate-50 dark:bg-blue-950 rounded-xl shadow-xl p-4">
             <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold text-gray-800 dark:text-blue-300">
                     {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}

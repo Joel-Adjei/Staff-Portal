@@ -8,8 +8,8 @@ const useFetch =({method="GET",endpoint })=>{
     async function fetchData({payload, token}) {
         setLoading(true)
 
-        // http://localhost:3000 || https://khms-backend.onrender.com
-        const API_BASE_URL = "https://khms-backend.onrender.com"
+        // http://localhost:3000 || https://khms-backend.onrender.com  "https://staff-portal-60yi.onrender.com"
+        const API_BASE_URL = "http://localhost:3000"
 
         try{
              response.current =  await fetch(`${API_BASE_URL}${endpoint}`,

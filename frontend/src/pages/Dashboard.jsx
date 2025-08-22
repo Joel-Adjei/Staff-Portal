@@ -5,13 +5,14 @@ import {usePortal} from "../context/PortalContext";
 import AppLoading from '../components/basic/loading/AppLoading';
 import AdminDashboard from './admin/AdminDashboard';
 import Greetings from "../components/dashboard/Greatings";
+import DashCalender from '../components/dashboard/Calendar';
 
 
 const Dashboard = () => {
   const { user: userData , userRef, roleRef , fetchProfile } = useAuth()
   const navigator = useNavigate()
 
-  const { setCurrentPage } = usePortal
+  const { setCurrentPage , events } = usePortal
 
   return (
       <>
@@ -25,7 +26,7 @@ const Dashboard = () => {
       <h4 className="text-lg font-medium text-blue-100 py-2 px-5 rounded-t-lg bg-blue-600 dark:bg-blue-950 dark:text-blue-200 mb-2">Usage
         Documentation</h4>
       <ul className="list-disc list-inside text-blue-700 dark:text-blue-200 px-4 pb-2 space-y-1">
-        {roleRef.current === "teaching" && (
+        {roleRef.current === "staff" && (
             <>
               <li>Use "Submit Teaching Materials" to upload your PDF lesson notes.</li>
               <li>Fill out the "Apply for Leave" form for any leave requests.</li>
@@ -54,11 +55,9 @@ const Dashboard = () => {
         )}
       </ul>
     </div>
-      <div className={'p-3 bg-gray-50 dark:bg-blue-950 dark:text-blue-200 shadow-xl mt-7 rounded-lg border-2 border-orange-color dark:border-blue-300'}>
-          Quote of the day
-          <p className={'mt-2 text-sm text-gray-500'}>
-              Eat Gob3 everyday it helps the body to last long when teaching
-          </p>
+      
+      <div className='mt-10'>
+        <DashCalender events={events} />
       </div>
   </div>
       }

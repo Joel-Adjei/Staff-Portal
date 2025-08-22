@@ -22,6 +22,8 @@ import StaffProfileSetup from "./components/ProfileSetup/StaffProfileSetup";
 import StaffDetails from "./components/others/StaffDetails";
 import AnnouncementDetail from './components/others/AnnounceDetails'
 import SuggestionDetails from './components/others/SuggestionDetails'
+import AcademicCalender from './pages/AcademicCalender'
+import AdminTLM from './pages/admin/adminTLM'
 
 function App() {
 
@@ -42,11 +44,13 @@ function App() {
               <Route path={"addStaff"} element={<AddStaff />} />
               <Route path={"updateProfile"} element={<UpdateProfile />} />
               <Route path={"submit-teaching-materials"} element={<SubmitTeachingMaterial />} />
+              <Route path={"view-lesson"} element={<AdminTLM />} />
               <Route path={"submit-performance"} element={<SubmitPerformance />} />
               <Route path={"post-announcement"} element={<PostAnnouncement />} />
               <Route path={"announcement/:id"} element={<AnnouncementDetail />} />
               <Route path={"review-leave"} element={<ReviewLeave />} />
               <Route path={"review-leave/:id"} element={<LeaveDetails />} />
+              <Route path={"academic-calender"} element={<AcademicCalender />} />
               <Route path={"manageStaff/:id"} element={<StaffDetails />} />
               <Route path={"review-suggestions"} element={<ReviewSuggestions />} />
               <Route path={"review-suggestions/:id"} element={<SuggestionDetails />} />

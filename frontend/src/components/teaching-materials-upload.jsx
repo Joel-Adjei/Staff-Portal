@@ -81,7 +81,7 @@ export default function TLMUploadForm() {
       return;
     }
     if (!formData.class.trim()) {
-      addToast('Description is required')
+      addToast('Class is required')
       // setError('Description is required');
       return;
     }
@@ -114,7 +114,7 @@ export default function TLMUploadForm() {
         setUploadStatus('success');
         // Reset form
         setFormData({
-          title: '',
+          name: '',
           class: '',
           file: null
         });
@@ -125,7 +125,7 @@ export default function TLMUploadForm() {
         throw new Error(`Upload failed: ${response.status} ${response.statusText}`);
       }
     } catch (err) {
-      addToast('Upload failed. Please try again.' , "error")
+      // addToast('Upload failed. Please try again.' , "error")
       setError(err.message || 'Upload failed. Please try again.');
       setUploadStatus('error');
     } finally {
@@ -164,7 +164,7 @@ export default function TLMUploadForm() {
                 type="text"
                 id="title"
                 name="title"
-                value={formData.title}
+                value={formData.name}
                 onChange={handleInputChange}
                 className={inputStyle}
                 placeholder="Enter the title of your material"
@@ -248,7 +248,6 @@ export default function TLMUploadForm() {
             {/* Submit Button */}
             <div className="pt-4">
               <Button
-                type="submit"
                 disabled={isUploading}
                 onClick={handleSubmit}
                 className="w-full flex justify-center items-center"

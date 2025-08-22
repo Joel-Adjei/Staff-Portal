@@ -56,7 +56,7 @@ const NavigationPanelMobile =()=> {
             >
             </div>
             {/* Sidebar */}
-            <aside className={`w-[230px] h-[100vh] pt-[70px] fixed bottom-0 dark:bg-blue-950 left-0 bg-[#FBFBFB] px-2 pl-0 shadow-2xl ${showPanelMobile} flex-col rounded-r-3xl z-20 md:hidden`}>
+            <aside className={`w-[230px] h-[100dvh] pt-[70px] fixed bottom-0 dark:bg-blue-950 left-0 bg-[#FBFBFB] px-2 pl-0 shadow-2xl ${showPanelMobile} flex-col rounded-r-3xl z-20 md:hidden`}>
                 <nav className=" w-full h-full flex flex-col justify-between">
                     <ul>
                         <NavigationItem
@@ -119,6 +119,14 @@ const NavigationPanelMobile =()=> {
                                     viewName="review-leave"
                                     to={"/portal/review-leave"}
                                 />
+
+                                <NavigationItem
+                                    icon={FileText}
+                                    label="View Lesson Note"
+                                    viewName="view-lesson"
+                                    to={"/portal/view-lesson"}
+                                />
+                                
                                 <NavigationItem
                                     icon={MessageSquare}
                                     label="Review Suggestions"

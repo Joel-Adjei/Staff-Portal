@@ -7,6 +7,7 @@ import DashCalender from "../../components/dashboard/Calendar";
 import usePageTile from "../../hooks/usePageTitle";
 import useFetch from '../../hooks/useFetch';
 import PortalLoading from '../../components/basic/loading/PortalLoading';
+import { usePortal } from '../../context/PortalContext';
 
 const dStat = {
     totalStaff : 0,
@@ -15,6 +16,7 @@ const dStat = {
 }
 const AdminDashboard = () => {
     const {userRef , token} = useAuth()
+    const {events }= usePortal()
     const [loading , setLoading] = useState(false)
     const [stat , setStat] = useState(dStat)
     const { fetchData , response } = useFetch({endpoint: "/users/admin/stats"})
@@ -62,7 +64,7 @@ const AdminDashboard = () => {
 
         
         <div className={"lg:hidden  py-4"}>
-                <DashCalender />
+                <DashCalender events={events} />
         </div>
     </div>
   )
